@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "access_from_alb" {
 #################################################################
 
 resource "aws_s3_bucket" "bucket_access_logs" {
-    bucket          = "'var.accesslog_bucket_name'-${local.account_id}"
+    bucket          = "${var.accesslog_bucket_name}-${local.account_id}"
     #force_destroy   = false
     force_destroy   = true
 }
