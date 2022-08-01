@@ -1,9 +1,9 @@
 terraform {
   backend "remote" {
-    organization    = "OrgName"
+    organization    = "TerraCloudZoom"
 
     workspaces {
-      name          = "WorkspaceName"
+      name          = "Development"
     }
   }
 }

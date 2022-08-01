@@ -3,7 +3,7 @@
 ######### We will create ALB with Deletion Protection   #########
 #################################################################
 
-resource "aws_alb" "alb" {
+resource "aws_lb" "alb" {
   name               = var.alb_name
   internal           = false
   load_balancer_type = "application"
@@ -13,7 +13,7 @@ resource "aws_alb" "alb" {
   enable_deletion_protection = true
 
   access_logs {
-    bucket            = "'var.accesslog_bucket_name'-${local.account_id}"
+    bucket            = "${var.accesslog_bucket_name}-${local.account_id}"
     prefix            = "bucket_access_logs"
     enabled           = true
   }
