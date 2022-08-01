@@ -6,7 +6,7 @@ resource "aws_vpc" "main_vpc" {
   instance_tenancy = var.tenancy
 
   tags = {
-    Name           = "aws_vpc.vpc_name"
+    Name           = var.vpc_name
   }
 }
 
