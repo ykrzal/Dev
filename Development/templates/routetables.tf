@@ -14,7 +14,6 @@ resource "aws_route_table" "public_rt" {
     Name             = "PublicRouteTable"
   }
 }
-
 #####################################################
 ############### NAT RT A/B ##########################
 ########## Route table: attach Nat Gateway ##########
@@ -33,7 +32,6 @@ resource "aws_route_table" "nat_rt" {
     Name              = "NatRouteTable-${count.index+1}"
   }
 }
-
 #####################################################
 ############## Public SA A/B ########################
 ######### Public Subnet Association #################
@@ -44,7 +42,6 @@ resource "aws_route_table_association" "public" {
   subnet_id           = element(aws_subnet.public.*.id,count.index)
   route_table_id      = aws_route_table.public_rt.id
 }
-
 #####################################################
 ################### NAT SA A/B ######################
 ############ NAT Subnet Association #################
@@ -53,5 +50,19 @@ resource "aws_route_table_association" "nat_rt" {
   count               = length(var.private)
 
   subnet_id           = element(aws_subnet.private.*.id,count.index)
+  route_table_id      = element(aws_route_table.nat_rt.*.id,count.index)
+}
+######## SA for Admin static site
+resource "aws_route_table_association" "nat_rt_admin" {
+  count               = length(var.private_admin)
+
+  subnet_id           = element(aws_subnet.private_admin.*.id,count.index)
+  route_table_id      = element(aws_route_table.nat_rt.*.id,count.index)
+}
+######## SA for Admin API
+resource "aws_route_table_association" "nat_rt_admin_api" {
+  count               = length(var.private_admin_api)
+
+  subnet_id           = element(aws_subnet.private_admin_api.*.id,count.index)
   route_table_id      = element(aws_route_table.nat_rt.*.id,count.index)
 }
