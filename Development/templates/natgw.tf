@@ -15,6 +15,6 @@ resource "aws_nat_gateway" "natgw" {
   subnet_id     = element(aws_subnet.public.*.id, count.index)
 
   tags = {
-    Name        = "var.natgw_name-${count.index+1}"
+    Name        = "'var.natgw_name'-${count.index+1}"
   }
 }
