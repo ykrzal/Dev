@@ -10,16 +10,16 @@ resource "aws_vpc" "main_vpc" {
   }
 }
 
-#####################################################
-############# Enable VPC FlowLog ####################
-#####################################################
-resource "aws_flow_log" "flowlog" {
-  iam_role_arn    = aws_iam_role.flowlogrole.arn
-  log_destination = aws_cloudwatch_log_group.vpc_flowlog.arn
-  traffic_type    = "ALL"
-  vpc_id          = aws_vpc.main_vpc.id
-}
+# #####################################################
+# ############# Enable VPC FlowLog ####################
+# #####################################################
+# resource "aws_flow_log" "flowlog" {
+#   iam_role_arn    = aws_iam_role.flowlogrole.arn
+#   log_destination = aws_cloudwatch_log_group.vpc_flowlog.arn
+#   traffic_type    = "ALL"
+#   vpc_id          = aws_vpc.main_vpc.id
+# }
 
-resource "aws_cloudwatch_log_group" "vpc_flowlog" {
-  name            = "boopos-vpc-flowlog-${local.account_id}"
-}
+# resource "aws_cloudwatch_log_group" "vpc_flowlog" {
+#   name            = "boopos-vpc-flowlog-${local.account_id}"
+# }

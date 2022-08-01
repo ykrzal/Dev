@@ -45,5 +45,30 @@ variable "azs" {
 
 ############### VPC Name (Tag) ##################
 variable "vpc_name" {
-	default = "development-main-vpc"
+	default = "development-vpc"
+}
+
+############### IGW Name (Tag) ##################
+variable "igw_name" {
+	default = "development-igw"
+}
+
+############# NAT GW Name (Tag) #################
+variable "natgw_name" {
+	default = "development-natgw"
+}
+
+############### ALB Name (Tag) ##################
+variable "alb_name" {
+	default = "development-alb"
+}
+
+######## ALB access log bucket name ##############
+variable "accesslog_bucket_name" {
+	default = "boopos-bucket-access-logs"
+}
+
+######## ALB access log bucket TAG ##############
+variable "accesslog_bucket_tag" {
+	default = "delelopment-boopos-alb-s3"
 }

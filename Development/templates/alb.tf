@@ -3,8 +3,8 @@
 ######### We will create ALB with Deletion Protection   #########
 #################################################################
 
-resource "aws_lb" "alb" {
-  name               = "boopos-alb-main"
+resource "aws_alb" "alb" {
+  name               = var.alb_name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.allow_all_traffic.id]
@@ -13,13 +13,13 @@ resource "aws_lb" "alb" {
   enable_deletion_protection = true
 
   access_logs {
-    bucket            = "boopos-bucket-access-logs-${local.account_id}"
+    bucket            = "var.accesslog_bucket_name-${local.account_id}"
     prefix            = "bucket_access_logs"
     enabled           = true
   }
 
   tags = {
-    Environment       = "boopos-alb-s3"
+    Environment       = var.accesslog_bucket_tag
   }
 }
 
@@ -59,8 +59,9 @@ data "aws_iam_policy_document" "access_from_alb" {
 #################################################################
 
 resource "aws_s3_bucket" "bucket_access_logs" {
-    bucket          = "boopos-bucket-access-logs-${local.account_id}"
-    force_destroy   = false
+    bucket          = "var.accesslog_bucket_name-${local.account_id}"
+    #force_destroy   = false
+    force_destroy   = true
 }
 
 resource "aws_s3_bucket_policy" "bucket_access_logs_policy" {
