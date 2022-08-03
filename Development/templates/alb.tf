@@ -7,7 +7,7 @@ resource "aws_alb" "alb" {
   name               = var.alb_name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.allow_all_traffic.id]
+  security_groups    = [aws_security_group.alb.id]
   subnets            = [aws_subnet.public.*.id[0], aws_subnet.public.*.id[1]]
 
   enable_deletion_protection = true
@@ -77,7 +77,7 @@ resource "aws_alb_target_group" "admin" {
   name        = "admin-target-group"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.main_vpc.id
   target_type = "ip"
 
   health_check {

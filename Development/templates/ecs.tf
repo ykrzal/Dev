@@ -3,7 +3,7 @@
 #################################################
 
 resource "aws_ecr_repository" "ecr_lambda" {
-  name                 = var.lambda_ecr
+  name                 = "lambda"
   image_tag_mutability = "IMUTABLE"
 
   image_scanning_configuration {
@@ -31,9 +31,10 @@ resource "aws_ecs_task_definition" "admin" {
   network_mode             = "awsvpc"
   cpu                      = var.admin_cpu
   memory                   = var.admin_memory
-  execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
+  execution_role_arn       = aws_iam_role.ecs_tasks_execution_role.arn
 
-  task_role_arn = aws_iam_role.admin_role.arn
+  #task_role_arn = aws_iam_role.admin_role.arn
+  task_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
 
   container_definitions = <<DEFINITION
 [
