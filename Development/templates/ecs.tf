@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "admin" {
     "portMappings": [
       {
         "protocol": "tcp",
-        "containerPort": "80",
+        "containerPort": 80,
         "hostPort": "${var.admin_port}"
       }
     ],
