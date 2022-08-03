@@ -36,7 +36,8 @@ resource "aws_ecs_task_definition" "admin" {
   #task_role_arn = aws_iam_role.admin_role.arn
   task_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
 
-  container_definitions = jsonencode([
+  container_definitions = <<TASK_DEFINITION
+[
   {
     "name": "${var.environment}-boopos-admin",
     "image": "${var.admin_image}",
@@ -44,10 +45,10 @@ resource "aws_ecs_task_definition" "admin" {
     "portMappings": [
       {
         "protocol": "tcp",
-        "containerPort": "${var.admin_container_port}"
-        "hostPort": "${var.admin_container_port}"
+        "containerPort": ${jsonencode(var.admin_container_port)},
+        "hostPort": ${jsonencode(var.admin_container_port)}
       }
-    ]
+    ],
     "environment": [
       {
         "name": "PORT",
@@ -69,7 +70,7 @@ resource "aws_ecs_task_definition" "admin" {
         "name": "ENVIRONMENT",
         "value": "${var.environment}"
       }
-    ]
+    ],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -79,9 +80,10 @@ resource "aws_ecs_task_definition" "admin" {
       }
     }
   }
-])
-}
+]
+TASK_DEFINITION
 
+}
 
 resource "aws_ecs_service" "admin" {
   name            = "${var.environment}-boopos-admin"
@@ -91,8 +93,6 @@ resource "aws_ecs_service" "admin" {
   desired_count   = var.replicas
 
   network_configuration {
-    #count           = length(var.private_admin)
-
     security_groups = [aws_security_group.allow_all_traffic_from_alb.id]
     subnets         = [aws_subnet.private_admin.*.id[0], aws_subnet.private_admin.*.id[1]]
   }
@@ -100,6 +100,6 @@ resource "aws_ecs_service" "admin" {
   load_balancer {
     target_group_arn = aws_alb_target_group.admin.id
     container_name   = "${var.environment}-boopos-admin"
-    container_port   =  var.admin_container_port
+    container_port   = var.admin_container_port
   }
 }
