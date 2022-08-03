@@ -74,6 +74,7 @@ resource "aws_ecs_task_definition" "admin" {
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
+        "awslogs-create-group": "true",
         "awslogs-group": "/fargate/service/${var.environment}-boopos-admin",
         "awslogs-region": "${var.region}",
         "awslogs-stream-prefix": "ecs"
