@@ -68,7 +68,65 @@ variable "accesslog_bucket_name" {
 	default = "boopos-bucket-access-logs"
 }
 
-######## ALB access log bucket TAG ##############
+######## ALB access log bucket TAG ###############
 variable "accesslog_bucket_tag" {
 	default = "delelopment-boopos-alb-s3"
+}
+
+######## Fargate task CPU (Admin) ################
+variable "admin_cpu" {
+  description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
+  default     = "1024"
+}
+
+######## Fargate task CPU (Admin) ################
+variable "admin_memory" {
+  description = "Fargate instance memory to provision (in MiB)"
+  default     = "2048"
+}
+
+######## Fargate task image (Admin) ###############
+variable "admin_image" {
+  description = "Docker image to run in the ECS cluster"
+  default     = "bradfordhamilton/crystal_blockchain:latest"
+}
+
+#########  ###############
+variable "health_check_path" {
+  default = "/"
+}
+
+variable "ecs_task_execution_role_name" {
+  description = "ECS task execution role name"
+  default = "myEcsTaskExecutionRole"
+}
+
+variable "ecs_auto_scale_role_name" {
+  description = "ECS auto scale role Name"
+  default = "myEcsAutoScaleRole"
+}
+
+variable "admin_port" {
+  description = "Port exposed by the docker image to redirect traffic to"
+  default     = 8080
+}
+
+variable "admin_ecs_min_instances" {
+  default = "1"
+}
+
+variable "admin_ecs_max_instances" {
+  default = "2"
+}
+
+variable "environment" {
+  default = "dev"
+}
+
+variable "admin_image" {
+  default = "nginx:latest"
+}
+
+variable "region" {
+  default = "us-east-1"
 }

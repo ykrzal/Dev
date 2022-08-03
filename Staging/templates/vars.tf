@@ -72,3 +72,8 @@ variable "accesslog_bucket_name" {
 variable "accesslog_bucket_tag" {
 	default = "staging-boopos-alb-s3"
 }
+
+########## ECR lambda repository ################
+variable "lambda_ecr" {
+	default = "development_lambda_ecr"
+}

@@ -31,10 +31,10 @@ resource "aws_security_group" "allow_all_local" {
 }
 
 #####################################################
-############### Allow_all_traffic ###################
+########### ALB SG Allow_all_traffic ################
 #####################################################
-resource "aws_security_group" "allow_all_traffic" {
-  name               = "allow_all_traffic"
+resource "aws_security_group" "alb" {
+  name               = "alb"
   vpc_id             = aws_vpc.main_vpc.id
 
   ingress {
@@ -52,7 +52,7 @@ resource "aws_security_group" "allow_all_traffic" {
   }
 
   tags = {
-    Name             = "allow_all_traffic"
+    Name             = "ALB-SG"
   }
 }
 
@@ -62,22 +62,24 @@ resource "aws_security_group" "allow_all_traffic" {
 resource "aws_security_group" "allow_all_traffic_from_alb" {
   name               = "allow_all_traffic_from_alb"
   vpc_id             = aws_vpc.main_vpc.id
+  description = "allow inbound access from the ALB only"
 
   ingress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    protocol        = "tcp"
+    from_port       = var.admin_port
+    to_port         = var.admin_port
+    security_groups = [aws_security_group.alb.id]
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
-    Name             = "allow_all_traffic_from_alb"
+    Name             = "AdminSite-SG"
   }
 }
+
+# Traffic to the ECS cluster should only come from the ALB
