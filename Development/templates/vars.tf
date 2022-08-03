@@ -111,6 +111,11 @@ variable "admin_port" {
   default     = 8080
 }
 
+variable "admin_container_port" {
+  description = "Port exposed by the docker image to redirect traffic to"
+  default     = 80
+}
+
 variable "admin_ecs_min_instances" {
   default = "1"
 }
