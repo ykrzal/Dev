@@ -95,7 +95,7 @@ resource "aws_ecs_service" "admin" {
     #count           = length(var.private_admin)
 
     security_groups = [aws_security_group.allow_all_traffic_from_alb.id]
-    subnets         = [aws_subnet.private_subnets.*.id[0], aws_subnet.private_subnets.*.id[1]]
+    subnets         = [aws_subnet.private_admin.*.id[0], aws_subnet.private_admin.*.id[1]]
   }
 
   load_balancer {
