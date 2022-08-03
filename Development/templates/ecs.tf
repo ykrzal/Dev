@@ -47,7 +47,7 @@ resource "aws_ecs_task_definition" "admin" {
         "containerPort": "${var.admin_container_port}"
         "hostPort": "${var.admin_container_port}"
       }
-    ],
+    ]
     "environment": [
       {
         "name": "PORT",
@@ -69,7 +69,7 @@ resource "aws_ecs_task_definition" "admin" {
         "name": "ENVIRONMENT",
         "value": "${var.environment}"
       }
-    ],
+    ]
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -79,7 +79,6 @@ resource "aws_ecs_task_definition" "admin" {
       }
     }
   }
-
 ])
 }
 
