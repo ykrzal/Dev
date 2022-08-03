@@ -87,8 +87,8 @@ variable "admin_memory" {
 
 ######## Fargate task image (Admin) ###############
 variable "admin_image" {
-  description = "Docker image to run in the ECS cluster"
-  default     = "bradfordhamilton/crystal_blockchain:latest"
+  description = "Docker image to run in the Admin ECS cluster"
+  default     = "nginx:latest"
 }
 
 #########  ###############
@@ -121,10 +121,6 @@ variable "admin_ecs_max_instances" {
 
 variable "environment" {
   default = "dev"
-}
-
-variable "admin_image" {
-  default = "nginx:latest"
 }
 
 variable "region" {
