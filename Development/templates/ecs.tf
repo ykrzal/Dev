@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "admin" {
       {
         "protocol": "tcp",
         "containerPort": "80",
-        "hostPort": ${var.admin_port}
+        "hostPort": "${var.admin_port}"
       }
     ],
     "environment": [
