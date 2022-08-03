@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "admin" {
   #task_role_arn = aws_iam_role.admin_role.arn
   task_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
 
-  container_definitions = <<DEFINITION
+  container_definitions = jsonencode(
 [
   {
     "name": "${var.environment}-boopos-admin",
@@ -81,7 +81,7 @@ resource "aws_ecs_task_definition" "admin" {
     }
   }
 ]
-DEFINITION
+)
 
 }
 
