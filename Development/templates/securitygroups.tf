@@ -66,8 +66,8 @@ resource "aws_security_group" "allow_all_traffic_from_alb" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = var.admin_port
-    to_port         = var.admin_port
+    from_port       = 80
+    to_port         = 80
     security_groups = [aws_security_group.alb.id]
   }
 
