@@ -1,5 +1,5 @@
 #################################################
-############ We will create ECR repos ###########
+############ We will create ECR repos ##########
 #################################################
 
 resource "aws_ecr_repository" "ecr_lambda" {
