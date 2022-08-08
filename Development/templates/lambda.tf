@@ -1,11 +1,11 @@
 ####### Lambda boopos-pdf-dev ################
 
-data "archive_file" "boopos-pdf-dev" {
-  type = "zip"
+# data "archive_file" "boopos-pdf-dev" {
+#   type = "zip"
 
-  source_dir  = "${path.module}/hello-world"
-  output_path = "${path.module}/hello-world.zip"
-}
+#   source_dir  = "${path.module}/hello-world"
+#   output_path = "${path.module}/hello-world.zip"
+# }
 
 resource "aws_s3_bucket" "boopos-pdf-dev" {
     bucket          = "boopos-pdf-dev-${local.account_id}"
@@ -30,7 +30,7 @@ resource "aws_lambda_function" "boopos-pdf-dev" {
   runtime = "nodejs14.x"
   handler = "hello.handler"
 
-  source_code_hash = data.archive_file.boopos-pdf-dev.output_base64sha256
+  #source_code_hash = data.archive_file.boopos-pdf-dev.output_base64sha256
 
   role = aws_iam_role.lambda_exec.arn
 }
