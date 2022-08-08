@@ -17,7 +17,7 @@ resource "aws_s3_object" "boopos-pdf-dev" {
   bucket = aws_s3_bucket.boopos-pdf-dev.id
 
   key    = "hello-world.zip"
-  source = data.archive_file.lambda_hello_world.output_path
+  #source = data.archive_file.lambda_hello_world.output_path
 }
 
 
