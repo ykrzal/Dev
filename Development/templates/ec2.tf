@@ -6,7 +6,7 @@ resource "aws_instance" "vpn" {
   #key_name                   = aws_key_pair.key_pair.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.vpn.id]
-  #subnet_id                   = "${element(split(",", aws_subnet.public.*.id), count.index)}"
+  #subnet_id                  = "${element(split(",", aws_subnet.public.*.id), count.index)}"
   
   tags = {
     Name = "TailScale-Main-VPN"
@@ -29,5 +29,6 @@ resource "aws_instance" "vpn" {
 
 # Create and assosiate an Elastic IP
 resource "aws_eip" "vpn" {
-  instance = aws_instance.vpn.id
+  instance                    = aws_instance.vpn.id
+  vpc                         = true
 }
