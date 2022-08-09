@@ -47,7 +47,7 @@ resource "aws_security_group" "alb" {
     from_port        = 8080
     to_port          = 8080
     protocol         = "tcp"
-    cidr_blocks      = ["${aws_eip.nat.public_ip}/32"] 
+    cidr_blocks      = ["${aws_eip.vpn.public_ip}/32"] 
   }
 
   egress {
