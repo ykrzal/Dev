@@ -2,7 +2,6 @@
 ### In this template we will create SG and rules ####
 #####################################################
 
-
 #####################################################
 ############### Allow_all_local #####################
 #####################################################
@@ -82,14 +81,13 @@ resource "aws_security_group" "allow_all_traffic_from_alb" {
   }
 }
 
-# Traffic to the ECS cluster should only come from the ALB
-
-# EFS Security Group
-
+#####################################################
+############ Allow_all_local_to_EFS #################
+#####################################################
 resource "aws_security_group" "admin_site_efs" {
   name        = "admin-site-efs-sg"
   description = "Allow EFS inbound traffic from VPC"
-  vpc_id      = local.vpc_id
+  vpc_id      = aws_vpc.main_vpc.id
 
   ingress {
     description      = "NFS traffic from VPC"
