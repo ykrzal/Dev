@@ -135,3 +135,8 @@ resource "aws_iam_role_policy" "ssm_role" {
 }
 EOF
 }
+
+resource "aws_iam_instance_profile" "ssm_role" {
+  name = "ssm_role"
+  role = "${aws_iam_role.ssm_role.name}"
+}
