@@ -1,12 +1,10 @@
 ####### Create a EC2 Instance with VPN TailScale ########
 resource "aws_instance" "vpn" {
-  count                   = length(var.public)
-  
   instance_type          = "t2.micro"
   ami                    = "ami-051dfed8f67f095f5"
   #key_name               = aws_key_pair.key_pair.id
   vpc_security_group_ids = aws_security_group.vpn
-  subnet_id              = element(aws_subnet.public.*.id,count.index)
+  subnet_id              = [aws_subnet.private_admin.*.id[0], aws_subnet.private_admin.*.id[1]]
 
   tags = {
     Name = "TailScale-Main-VPN"
