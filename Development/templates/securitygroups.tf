@@ -83,3 +83,23 @@ resource "aws_security_group" "allow_all_traffic_from_alb" {
 }
 
 # Traffic to the ECS cluster should only come from the ALB
+
+# EFS Security Group
+
+resource "aws_security_group" "admin_site_efs" {
+  name        = "admin-site-efs-sg"
+  description = "Allow EFS inbound traffic from VPC"
+  vpc_id      = local.vpc_id
+
+  ingress {
+    description      = "NFS traffic from VPC"
+    from_port        = 2049
+    to_port          = 2049
+    protocol         = "tcp"
+    cidr_blocks      = [var.vpc_cidr]
+  }
+
+  tags = {
+    Name             = "AdminSiteEFS-SG"
+  }
+}
