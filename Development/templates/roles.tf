@@ -69,7 +69,9 @@ EOF
 #   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 # }
 
-
+#####################################################
+############# ECS execution Role ####################
+#####################################################
 data "aws_iam_policy_document" "ecs_tasks_execution_role" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -89,4 +91,47 @@ resource "aws_iam_role" "ecs_tasks_execution_role" {
 resource "aws_iam_role_policy_attachment" "ecs_tasks_execution_role" {
   role       = "${aws_iam_role.ecs_tasks_execution_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+#####################################################
+############# SSM execution Role ####################
+#####################################################
+resource "aws_iam_role" "ssm_role" {
+  name = "ssm_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "ssm_role" {
+  name = "ssm_role"
+  role = aws_iam_role.ssm_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ssm:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
 }
