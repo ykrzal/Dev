@@ -5,11 +5,10 @@ resource "aws_efs_file_system" "admin_files" {
 }
 
 resource "aws_efs_mount_target" "admin_files" {
+  count               = length(var.private_admin)
+  
   file_system_id  = aws_efs_file_system.admin_files.id
-  subnet_id       = [aws_subnet.private_admin.*.id[0], aws_subnet.private_admin.*.id[1]]
+  subnet_id       = var.private_subnets[count.index]
   security_groups = aws_security_group.admin_site_efs.id
   
-  tags = {
-    Name = "${var.environment}-admin-files"
-  }
 }
