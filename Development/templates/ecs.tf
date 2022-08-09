@@ -1,18 +1,20 @@
 #################################################
-############ We will create ECR repos ##########
+############ We will create ECR repos ###########
 #################################################
 
-resource "aws_ecr_repository" "ecr_lambda" {
-  name                 = "lambda"
-  image_tag_mutability = "IMMUTABLE"
+# resource "aws_ecr_repository" "ecr_lambda" {
+#   name                 = "lambda"
+#   image_tag_mutability = "IMMUTABLE"
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
+#   image_scanning_configuration {
+#     scan_on_push = true
+#   }
+# }
 
+#################################################
+######## AWS ECS CLuster for Admin site #########
+#################################################
 
-############################################
 resource "aws_ecs_cluster" "admin_site" {
   name = "admin_site_cluster"
 }
@@ -42,6 +44,12 @@ resource "aws_ecs_task_definition" "admin" {
     "name": "${var.environment}-boopos-admin",
     "image": "${var.admin_image}",
     "essential": true,
+    "mountPoints": [
+          {
+              "containerPath": "/usr/share/nginx/html",
+              "sourceVolume": "admin-efs"
+          }
+      ],
     "portMappings": [
       {
         "protocol": "tcp",
@@ -53,18 +61,6 @@ resource "aws_ecs_task_definition" "admin" {
       {
         "name": "PORT",
         "value": "${var.admin_port}"
-      },
-      {
-        "name": "HEALTHCHECK",
-        "value": "${var.health_check_path}"
-      },
-      {
-        "name": "ENABLE_LOGGING",
-        "value": "false"
-      },
-      {
-        "name": "PRODUCT",
-        "value": "${var.environment}-boopos-admin"
       },
       {
         "name": "ENVIRONMENT",
@@ -83,7 +79,13 @@ resource "aws_ecs_task_definition" "admin" {
   }
 ]
 TASK_DEFINITION
-
+  volume {
+      name      = "admin-efs"
+      efs_volume_configuration {
+        file_system_id = aws_efs_file_system.admin_files.id
+        root_directory = "/"
+      }
+    }
 }
 
 resource "aws_ecs_service" "admin" {
