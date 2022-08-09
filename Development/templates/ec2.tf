@@ -29,5 +29,5 @@ resource "aws_instance" "vpn" {
 
 # Create and assosiate an Elastic IP
 resource "aws_eip" "vpn" {
-  instance = aws_instance.vnp.id
+  instance = aws_instance.vpn.id
 }
