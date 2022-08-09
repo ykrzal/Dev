@@ -2,11 +2,13 @@
 ##################### VPC ###########################
 #####################################################
 resource "aws_vpc" "main_vpc" {
-  cidr_block       = var.vpc_cidr
-  instance_tenancy = var.tenancy
+  cidr_block            = var.vpc_cidr
+  instance_tenancy      = var.tenancy
+  enable_dns_hostnames  = true
+  
 
   tags = {
-    Name           = var.vpc_name
+    Name                = var.vpc_name
   }
 }
 
