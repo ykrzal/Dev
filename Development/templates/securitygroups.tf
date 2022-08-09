@@ -36,11 +36,18 @@ resource "aws_security_group" "alb" {
   name               = "alb"
   vpc_id             = aws_vpc.main_vpc.id
 
+#   ingress {
+#     from_port        = 0
+#     to_port          = 0
+#     protocol         = "-1"
+#     cidr_blocks      = ["0.0.0.0/0"]
+#   }
+  
   ingress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = [aws_eip.vpn]
   }
 
   egress {
@@ -51,7 +58,7 @@ resource "aws_security_group" "alb" {
   }
 
   tags = {
-    Name             = "ALB-SG"
+    Name             = "Boopos-ALB-SG"
   }
 }
 
@@ -77,7 +84,7 @@ resource "aws_security_group" "allow_all_traffic_from_alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name             = "AdminSite-SG"
+    Name             = "Boopos-AdminSite-SG"
   }
 }
 
@@ -98,7 +105,7 @@ resource "aws_security_group" "admin_site_efs" {
   }
 
   tags = {
-    Name             = "AdminSiteEFS-SG"
+    Name             = "Boopos-AdminSiteEFS-SG"
   }
 }
 
@@ -117,6 +124,6 @@ resource "aws_security_group" "vpn" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name             = "AdminSite-SG"
+    Name             = "Boopos-VPN-SG"
   }
 }
