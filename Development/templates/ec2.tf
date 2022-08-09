@@ -5,7 +5,7 @@ resource "aws_instance" "vpn" {
   ami                         = "ami-051dfed8f67f095f5"
   #key_name                   = aws_key_pair.key_pair.id
   associate_public_ip_address = true
-  vpc_security_group_ids      = aws_security_group.vpn.id
+  vpc_security_group_ids      = [aws_security_group.vpn.id]
   #subnet_id                   = "${element(split(",", aws_subnet.public.*.id), count.index)}"
   
   tags = {
