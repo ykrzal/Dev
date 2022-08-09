@@ -113,7 +113,7 @@ resource "aws_security_group" "admin_site_efs" {
 ################# TailScale VPN SG ##################
 #####################################################
 resource "aws_security_group" "vpn" {
-  name               = "vpn"
+  name               = "boopos-vpn-sg"
   vpc_id             = aws_vpc.main_vpc.id
   description = "VPN traffic"
 
