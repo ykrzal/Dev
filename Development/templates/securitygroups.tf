@@ -101,3 +101,22 @@ resource "aws_security_group" "admin_site_efs" {
     Name             = "AdminSiteEFS-SG"
   }
 }
+
+#####################################################
+################# TailScale VPN SG ##################
+#####################################################
+resource "aws_security_group" "vpn" {
+  name               = "vpn"
+  vpc_id             = aws_vpc.main_vpc.id
+  description = "VPN traffic"
+
+  egress {
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name             = "AdminSite-SG"
+  }
+}
