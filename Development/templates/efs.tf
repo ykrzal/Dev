@@ -4,6 +4,12 @@ resource "aws_efs_file_system" "admin_files" {
   }
 }
 
+resource "aws_efs_file_system" "admin_files_green" {
+  tags = {
+    Name          = "${var.environment}-admin-files-green"
+  }
+}
+
 resource "aws_efs_mount_target" "admin_files" {
   count               = length(var.private_admin)
   
@@ -13,41 +19,51 @@ resource "aws_efs_mount_target" "admin_files" {
   
 }
 
-resource "aws_efs_access_point" "admin_blue" {
-  file_system_id = aws_efs_file_system.admin_files.id
-
-  posix_user {
-    gid = 1000
-    uid = 1000
-  }
-
-  root_directory {
-    path = "/blue"
-    creation_info {
-      owner_gid   = 1000
-      owner_uid   = 1000
-      permissions = 755
-    }
-  }
+resource "aws_efs_mount_target" "admin_files_green" {
+  count               = length(var.private_admin)
+  
+  file_system_id  = aws_efs_file_system.admin_files_green.id
+  subnet_id       = element(aws_subnet.private_admin.*.id,count.index)
+  security_groups = [aws_security_group.admin_site_efs.id]
+  
 }
 
-resource "aws_efs_access_point" "admin_green" {
-  file_system_id = aws_efs_file_system.admin_files.id
 
-  posix_user {
-    gid = 1000
-    uid = 1000
-  }
+# resource "aws_efs_access_point" "admin_blue" {
+#   file_system_id = aws_efs_file_system.admin_files.id
 
-  root_directory {
-    path = "/green"
-    creation_info {
-      owner_gid   = 1000
-      owner_uid   = 1000
-      permissions = 755
-    }
-  }
-}
+#   posix_user {
+#     gid = 1000
+#     uid = 1000
+#   }
+
+#   root_directory {
+#     path = "/blue"
+#     creation_info {
+#       owner_gid   = 1000
+#       owner_uid   = 1000
+#       permissions = 755
+#     }
+#   }
+# }
+
+# resource "aws_efs_access_point" "admin_green" {
+#   file_system_id = aws_efs_file_system.admin_files.id
+
+#   posix_user {
+#     gid = 1000
+#     uid = 1000
+#   }
+
+#   root_directory {
+#     path = "/green"
+#     creation_info {
+#       owner_gid   = 1000
+#       owner_uid   = 1000
+#       permissions = 755
+#     }
+#   }
+# }
 
 resource "aws_efs_file_system_policy" "policy" {
   file_system_id = aws_efs_file_system.admin_files.id
