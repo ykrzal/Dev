@@ -49,7 +49,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
 
     s3_logs {
       status   = "ENABLED"
-      location = "aws_s3_bucket.s3_logging_bucket"
+      location = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
     }
   }
 
@@ -95,7 +95,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
 
     s3_logs {
       status   = "ENABLED"
-      location = "aws_s3_bucket.s3_logging_bucket"
+      location = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
     }
   }
 
