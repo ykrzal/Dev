@@ -167,7 +167,7 @@ EOF
 
 resource "aws_iam_role_policy" "codebuild_policy" {
   name = "codebuild_policy"
-  role = "aws_iam_role.codebuild_role.id"
+  role = aws_iam_role.codebuild_role.id
 
   policy = <<POLICY
 {
@@ -238,7 +238,7 @@ EOF
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
   name = "codepipeline_policy"
-  role = "aws_iam_role.codepipeline_role.id"
+  role = aws_iam_role.codepipeline_role.id
 
   policy = <<EOF
 {
