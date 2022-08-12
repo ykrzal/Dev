@@ -221,7 +221,8 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
             "Resource": "*"
         }
     ]
-}EOF
+}
+EOF
 }
 
 # data "aws_iam_policy_document" "codepipeline_role" {
