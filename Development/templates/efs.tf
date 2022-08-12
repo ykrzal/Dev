@@ -21,7 +21,7 @@ resource "aws_efs_access_point" "admin_blue" {
   }
 }
 
-resource "aws_efs_access_point" "admin_blue" {
+resource "aws_efs_access_point" "admin_green" {
   file_system_id = aws_efs_file_system.admin_files.id
 
   root_directory {
