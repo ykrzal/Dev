@@ -189,64 +189,64 @@ EOF
 #####################################################
 ############### CodePipeline Role ###################
 #####################################################
-# resource "aws_iam_role" "codepipeline_role" {
-#   name = "codepipeline_role"
-
-#   assume_role_policy = <<EOF
-# {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Effect": "Allow",
-#             "Principal": {
-#                 "Service": [
-#                     "codepipeline.amazonaws.com"
-#                 ]
-#             },
-#             "Action": "sts:AssumeRole"
-#         }
-#     ]
-# }
-# EOF
-# }
-
-# resource "aws_iam_role_policy" "codepipeline_role" {
-#   name = "codepipeline_role"
-#   role = "aws_iam_role.codepipeline_role.id"
-
-#   policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Action": [
-#         "*:*"
-#       ],
-#       "Effect": "Allow",
-#       "Resource": "*"
-#     }
-#   ]
-# }
-# EOF
-# }
-
-data "aws_iam_policy_document" "codepipeline_role" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["codepipeline.amazonaws.com"]
-    }
-  }
-}
-
 resource "aws_iam_role" "codepipeline_role" {
-  name               = "${var.environment}-codepipeline_role"
-  assume_role_policy = "${data.aws_iam_policy_document.codepipeline_role.json}"
+  name = "codepipeline_role"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": [
+                    "codepipeline.amazonaws.com"
+                ]
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+EOF
 }
 
-resource "aws_iam_role_policy_attachment" "codepipeline_role" {
-  role       = "${aws_iam_role.codepipeline_role.name}"
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+resource "aws_iam_role_policy" "codepipeline_role" {
+  name = "codepipeline_role"
+  role = "aws_iam_role.codepipeline_role.id"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "*:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
 }
+EOF
+}
+
+# data "aws_iam_policy_document" "codepipeline_role" {
+#   statement {
+#     actions = ["sts:AssumeRole"]
+
+#     principals {
+#       type        = "Service"
+#       identifiers = ["codepipeline.amazonaws.com"]
+#     }
+#   }
+# }
+
+# resource "aws_iam_role" "codepipeline_role" {
+#   name               = "${var.environment}-codepipeline_role"
+#   assume_role_policy = "${data.aws_iam_policy_document.codepipeline_role.json}"
+# }
+
+# resource "aws_iam_role_policy_attachment" "codepipeline_role" {
+#   role       = "${aws_iam_role.codepipeline_role.name}"
+#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+# }
