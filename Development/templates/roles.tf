@@ -156,7 +156,8 @@ resource "aws_iam_role" "codebuild_role" {
       "Sid": "",
       "Effect": "Allow",
       "Principal": {
-        "Service": "codebuild.amazonaws.com"
+        "Service": "codebuild.amazonaws.com",
+        "Service": "codepipeline.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
     }
@@ -167,7 +168,7 @@ EOF
 
 resource "aws_iam_role_policy" "codebuild_role" {
   name = "codebuild_role"
-  role = aws_iam_role.codebuild_role.id
+  role = "aws_iam_role.codebuild_role.id"
 
   policy = <<EOF
 {
@@ -199,7 +200,8 @@ resource "aws_iam_role" "codepipeline_role" {
       "Sid": "",
       "Effect": "Allow",
       "Principal": {
-        "Service": "codepipeline.amazonaws.com"
+        "Service": "codepipeline.amazonaws.com",
+        "Service": "codebuild.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
     }
@@ -210,7 +212,7 @@ EOF
 
 resource "aws_iam_role_policy" "codepipeline_role" {
   name = "codepipeline_role"
-  role = aws_iam_role.codepipeline_role.id
+  role = "aws_iam_role.codepipeline_role.id"
 
   policy = <<EOF
 {
