@@ -185,6 +185,7 @@ TASK_DEFINITION
           access_point_id = aws_efs_access_point.admin_green.id
           iam             = "ENABLED"
         }
+      } 
     }
 }
 
