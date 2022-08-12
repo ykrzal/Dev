@@ -150,3 +150,7 @@ variable "admin_repository_name" {
   description = "GitHub repository name"
   default     = "infrastructure"
 }
+
+variable "connections_connection" {
+  default     = "arn:aws:codestar-connections:us-east-1:198448550418:connection/6f401858-208b-4c19-abb9-8571f994e437"
+}
