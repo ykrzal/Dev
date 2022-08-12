@@ -146,7 +146,7 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
       version          = "1"
 
       configuration = {
-        ProjectName = "aws_codebuild_project.codebuild_project_admin_site.name"
+        ProjectName = "${aws_codebuild_project.codebuild_project_admin_site.name}"
       }
     }
   }
@@ -175,7 +175,7 @@ stage {
       version         = "1"
 
       configuration = {
-        ProjectName = "aws_codebuild_project.codebuild_deploy_admin_site.name"
+        ProjectName = "${aws_codebuild_project.codebuild_deploy_admin_site.name}"
       }
     }
   }
