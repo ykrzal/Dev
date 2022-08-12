@@ -127,7 +127,7 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        BranchName       = var.admin_repository_branch
+        BranchName       = "main"
         ConnectionArn    = var.connections_connection
         FullRepositoryId = "ykrzal/infrastructure"
       }
@@ -146,7 +146,7 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
       version          = "1"
 
       configuration = {
-        ProjectName = "aws_codebuild_project.codebuild_project_admin_site"
+        ProjectName = "aws_codebuild_project.codebuild_project_admin_site.name"
       }
     }
   }
@@ -175,7 +175,7 @@ stage {
       version         = "1"
 
       configuration = {
-        ProjectName = "aws_codebuild_project.codebuild_deploy_admin_site"
+        ProjectName = "aws_codebuild_project.codebuild_deploy_admin_site.name"
       }
     }
   }
