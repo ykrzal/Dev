@@ -135,3 +135,18 @@ variable "region" {
 variable "replicas" {
   default = "1"
 }
+
+variable "admin_repository_branch" {
+  description = "Repository branch to connect to"
+  default     = "develop"
+}
+
+variable "admin_repository_owner" {
+  description = "GitHub repository owner"
+  default     = "ykrzal"
+}
+
+variable "admin_repository_name" {
+  description = "GitHub repository name"
+  default     = "infrastructure"
+}
