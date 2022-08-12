@@ -5,7 +5,7 @@ resource "aws_instance" "vpn" {
   #key_name                   = aws_key_pair.key_pair.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.vpn.id]
-  subnet_id                   = [aws_subnet.private_admin.*.id[0]]
+  subnet_id                   = aws_subnet.private_admin.*.id[0]
   
   tags = {
     Name = "TailScale-Main-VPN"
