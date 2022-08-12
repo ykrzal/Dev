@@ -65,7 +65,7 @@ resource "aws_efs_mount_target" "admin_files_green" {
 #   }
 # }
 
-resource "aws_efs_file_system_policy" "policy" {
+resource "aws_efs_file_system_policy" "admin_blue" {
   file_system_id = aws_efs_file_system.admin_files.id
 
   bypass_policy_lockout_safety_check = true
@@ -82,6 +82,38 @@ resource "aws_efs_file_system_policy" "policy" {
                 "AWS": "*"
             },
             "Resource": "${aws_efs_file_system.admin_files.arn}",
+            "Action": [
+                "elasticfilesystem:ClientMount",
+                "elasticfilesystem:ClientWrite"
+            ],
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "true"
+                }
+            }
+        }
+    ]
+}
+POLICY
+}
+
+resource "aws_efs_file_system_policy" "admin_green" {
+  file_system_id = aws_efs_file_system.admin_files_green.id
+
+  bypass_policy_lockout_safety_check = true
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Id": "ExamplePolicy01",
+    "Statement": [
+        {
+            "Sid": "ExampleStatement01",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Resource": "${aws_efs_file_system.admin_files_green.arn}",
             "Action": [
                 "elasticfilesystem:ClientMount",
                 "elasticfilesystem:ClientWrite"

@@ -117,7 +117,7 @@ resource "aws_ecs_service" "admin" {
 }
 
 ##################################################
-####### Admin Green on port 8080 #################
+####### Admin Green on port 8081 #################
 ##################################################
 resource "aws_appautoscaling_target" "admin_gree_scale_target" {
   service_namespace        = "ecs"
@@ -145,7 +145,7 @@ resource "aws_ecs_task_definition" "admin_green" {
     "mountPoints": [
           {
               "containerPath": "/usr/share/nginx/html",
-              "sourceVolume": "admin-efs"
+              "sourceVolume": "admin-efs-green"
           }
       ],
     "portMappings": [
@@ -174,7 +174,7 @@ resource "aws_ecs_task_definition" "admin_green" {
 ]
 TASK_DEFINITION
   volume {
-      name      = "admin-efs"
+      name      = "admin-efs-green"
       efs_volume_configuration {
         file_system_id = aws_efs_file_system.admin_files_green.id
         root_directory = "/"
