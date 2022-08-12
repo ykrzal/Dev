@@ -40,8 +40,6 @@ resource "aws_ecs_task_definition" "admin" {
   cpu                      = var.admin_cpu
   memory                   = var.admin_memory
   execution_role_arn       = aws_iam_role.ecs_tasks_execution_role.arn
-
-  #task_role_arn = aws_iam_role.admin_role.arn
   task_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
 
   container_definitions = <<TASK_DEFINITION
@@ -91,10 +89,10 @@ TASK_DEFINITION
         file_system_id    = aws_efs_file_system.admin_files.id
         root_directory    = "/blue"
         transit_encryption  = "ENABLED"
-        # authorization_config {
-        #   access_point_id = aws_efs_access_point.admin_blue.id
-        #   iam             = "ENABLED"
-        # }
+        authorization_config {
+          access_point_id = aws_efs_access_point.admin_blue.id
+          iam             = "ENABLED"
+        }
       }
     }
 }
@@ -181,10 +179,10 @@ TASK_DEFINITION
         file_system_id = aws_efs_file_system.admin_files.id
         root_directory = "/green"
         transit_encryption  = "ENABLED"
-        # authorization_config {
-        #   access_point_id = aws_efs_access_point.admin_green.id
-        #   iam             = "ENABLED"
-        # }
+        authorization_config {
+          access_point_id = aws_efs_access_point.admin_green.id
+          iam             = "ENABLED"
+        }
       } 
     }
 }
