@@ -108,7 +108,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
 ##################### Pipeline for Admin Site ###########################
 resource "aws_codepipeline" "codepipeline_admin_site" {
   name     = "${var.environment}-admin-site"
-  role_arn = "aws_iam_role.codepipeline_role.arn"
+  role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
     location = "aws_s3_bucket.codepipeline_artifact_bucket"
