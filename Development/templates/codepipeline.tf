@@ -18,7 +18,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
   name          = "${var.environment}-build-admin-site"
   description   = "Build codebuild project"
   build_timeout = "5"
-  service_role  = "aws_iam_role.codebuild_role"
+  service_role  = "aws_iam_role.codebuild_role.arn"
 
   artifacts {
     type = "CODEPIPELINE"
@@ -64,7 +64,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
   name          = "${var.environment}-deploy-admin-site"
   description   = "Deploy codebuild project"
   build_timeout = "5"
-  service_role  = "aws_iam_role.codebuild_role"
+  service_role  = "aws_iam_role.codebuild_role.arn"
 
   artifacts {
     type = "CODEPIPELINE"
@@ -108,7 +108,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
 ##################### Pipeline for Admin Site ###########################
 resource "aws_codepipeline" "codepipeline_admin_site" {
   name     = "${var.environment}-admin-site"
-  role_arn = aws_iam_role.codepipeline_role
+  role_arn = "aws_iam_role.codepipeline_role.arn"
 
   artifact_store {
     location = "aws_s3_bucket.codepipeline_artifact_bucket"
