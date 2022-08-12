@@ -89,12 +89,12 @@ TASK_DEFINITION
       name                = "admin-efs"
       efs_volume_configuration {
         file_system_id    = aws_efs_file_system.admin_files.id
-        root_directory    = "/"
+        root_directory    = "/blue"
         transit_encryption  = "ENABLED"
-        authorization_config {
-          access_point_id = aws_efs_access_point.admin_blue.id
-          iam             = "ENABLED"
-        }
+        # authorization_config {
+        #   access_point_id = aws_efs_access_point.admin_blue.id
+        #   iam             = "ENABLED"
+        # }
       }
     }
 }
@@ -179,12 +179,12 @@ TASK_DEFINITION
       name      = "admin-efs"
       efs_volume_configuration {
         file_system_id = aws_efs_file_system.admin_files.id
-        root_directory = "/"
+        root_directory = "/green"
         transit_encryption  = "ENABLED"
-        authorization_config {
-          access_point_id = aws_efs_access_point.admin_green.id
-          iam             = "ENABLED"
-        }
+        # authorization_config {
+        #   access_point_id = aws_efs_access_point.admin_green.id
+        #   iam             = "ENABLED"
+        # }
       } 
     }
 }
