@@ -140,3 +140,90 @@ resource "aws_iam_instance_profile" "ssm_role" {
   name = "ssm_role"
   role = "${aws_iam_role.ssm_role.name}"
 }
+
+
+#####################################################
+################# CodeBuild Role ####################
+#####################################################
+resource "aws_iam_role" "codebuild_role" {
+  name = "codebuild_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codebuild.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "codebuild_role" {
+  name = "codebuild_role"
+  role = aws_iam_role.codebuild_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "*:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+#####################################################
+############### CodePipeline Role ###################
+#####################################################
+resource "aws_iam_role" "codepipeline_role" {
+  name = "codepipeline_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "codepipeline_role" {
+  name = "codepipeline_role"
+  role = aws_iam_role.codepipeline_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "*:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
