@@ -90,6 +90,11 @@ TASK_DEFINITION
       efs_volume_configuration {
         file_system_id    = aws_efs_file_system.admin_files.id
         root_directory    = "/"
+        transit_encryption  = "ENABLED"
+        authorization_config {
+          access_point_id = aws_efs_access_point.admin_blue.id
+          iam             = "ENABLED"
+        }
       }
     }
 }
@@ -174,8 +179,12 @@ TASK_DEFINITION
       name      = "admin-efs"
       efs_volume_configuration {
         file_system_id = aws_efs_file_system.admin_files.id
-        root_directory = "/green"
-      }
+        root_directory = "/"
+        transit_encryption  = "ENABLED"
+        authorization_config {
+          access_point_id = aws_efs_access_point.admin_green.id
+          iam             = "ENABLED"
+        }
     }
 }
 
