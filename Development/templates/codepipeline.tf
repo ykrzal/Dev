@@ -122,8 +122,8 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
       name             = "Source"
       category         = "Source"
       owner            = "AWS"
-      provider         = "GitHub"
-      version          = "2"
+      provider         = "CodeStarSourceConnection"
+      version          = "1"
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
