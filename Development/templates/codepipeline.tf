@@ -127,8 +127,11 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        RepositoryName = var.admin_repository_name
-        BranchName     = var.admin_repository_branch
+        RepositoryName   = var.admin_repository_name
+        BranchName       = var.admin_repository_branch
+        ConnectionArn    = var.connections_connection
+        FullRepositoryId = "ykrzal/infrastructure"
+        BranchName       = "main"
       }
     }
   }
