@@ -26,7 +26,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
 
   cache {
     type     = "S3"
-    location = "aws_s3_bucket.s3_logging_bucket"
+    location = aws_s3_bucket.s3_logging_bucket.bucket
   }
 
   environment {
@@ -72,7 +72,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
 
   cache {
     type     = "S3"
-    location = "aws_s3_bucket.s3_logging_bucket"
+    location = aws_s3_bucket.s3_logging_bucket.bucket
   }
 
   environment {
