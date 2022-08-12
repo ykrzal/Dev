@@ -123,7 +123,7 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
       category         = "Source"
       owner            = "AWS"
       provider         = "GitHub"
-      version          = "1"
+      version          = "2"
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
