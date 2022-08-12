@@ -72,9 +72,28 @@ resource "aws_s3_bucket_policy" "bucket_access_logs_policy" {
 #################################################################
 ############## ALB Target group and listener ####################
 #################################################################
-
+###### Admin Blue env TG
 resource "aws_alb_target_group" "admin" {
   name        = "admin-target-group"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main_vpc.id
+  target_type = "ip"
+
+  health_check {
+    healthy_threshold   = "3"
+    interval            = "30"
+    protocol            = "HTTP"
+    matcher             = "200"
+    timeout             = "3"
+    path                = var.health_check_path
+    unhealthy_threshold = "2"
+  }
+}
+
+######## Admin Green env TG 
+resource "aws_alb_target_group" "admin_green" {
+  name        = "admin-target-group-green"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main_vpc.id
@@ -99,6 +118,17 @@ resource "aws_alb_listener" "admin_site" {
 
   default_action {
     target_group_arn = aws_alb_target_group.admin.id
+    type             = "forward"
+  }
+}
+
+resource "aws_alb_listener" "admin_site_green" {
+  load_balancer_arn = aws_alb.alb.id
+  port              = var.admin_port_green
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = aws_alb_target_group.admin_green.id
     type             = "forward"
   }
 }

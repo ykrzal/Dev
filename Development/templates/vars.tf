@@ -91,7 +91,7 @@ variable "admin_image" {
   default     = "nginx:latest"
 }
 
-#########  ###############
+################# HC path ##########################
 variable "health_check_path" {
   default = "/"
 }
@@ -109,6 +109,11 @@ variable "ecs_auto_scale_role_name" {
 variable "admin_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 8080
+}
+
+variable "admin_port_green" {
+  description = "Port exposed by the docker image to redirect traffic to"
+  default     = 8081
 }
 
 variable "admin_container_port" {
