@@ -55,7 +55,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "templates/buildspec/buildspec_build_staticsite.yml"
+    buildspec = "Development/templates/buildspec/buildspec_build_staticsite.yml"
   }
 }
 
@@ -101,7 +101,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "templates/buildspec/buildspec_deploy_staticsite.yml"
+    buildspec = "Development/templates/buildspec/buildspec_deploy_staticsite.yml"
   }
 }
 
