@@ -137,10 +137,10 @@ resource "aws_codepipeline" "codepipeline_admin_site" {
   }
 
   stage {
-    name = "Build Admin API"
+    name = "Build"
 
     action {
-      name             = "build-admin-api"
+      name             = "Build"
       category         = "Build"
       owner            = "AWS"
       provider         = "CodeBuild"
@@ -166,10 +166,10 @@ stage {
 }
 
   stage {
-    name = "Terraform_Apply"
+    name = "Deploy"
 
     action {
-      name            = "Terraform-Apply"
+      name            = "Deploy"
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
