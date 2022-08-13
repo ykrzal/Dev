@@ -68,8 +68,8 @@ resource "aws_route_table_association" "nat_rt_admin_api" {
 }
 ######## SA for Codebuild
 resource "aws_route_table_association" "nat_rt_codebuuild" {
-  count               = length(var.private_codebuuild)
+  count               = length(var.private_codebuild)
 
-  subnet_id           = element(aws_subnet.private_codebuuild.*.id,count.index)
+  subnet_id           = element(aws_subnet.private_codebuild.*.id,count.index)
   route_table_id      = element(aws_route_table.nat_rt.*.id,count.index)
 }
