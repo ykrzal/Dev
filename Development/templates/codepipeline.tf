@@ -68,7 +68,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
   
   vpc_config {
     vpc_id                    = aws_vpc.main_vpc.id
-    subnets                   = ["${aws_subnet.private_codebuuild.*.id[0]}", "${aws_subnet.private_codebuild.*.id[1]}"]
+    subnets                   = ["${aws_subnet.private_codebuild.*.id[0]}", "${aws_subnet.private_codebuild.*.id[1]}"]
     security_group_ids        = [aws_security_group.codebuild.id]
 
 }
@@ -125,7 +125,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
   file_system_locations {
     type                        = "EFS"
     identifier                  = "GREEN"
-    location                    = "${aws_efs_file_system.admin_files_green.id}.efs.${region}.amazonaws.com:/"
+    location                    = "${aws_efs_file_system.admin_files_green.id}.efs.us-east-2.amazonaws.com:/"
     mount_point                 = "/mnt/efs/green"
   }
 
