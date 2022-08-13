@@ -53,7 +53,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
     }
   }
 
-  file_system_locations {
+  file_system_location {
     type = "EFS"
     identifier = "GREEN"
     location = aws_efs_file_system.admin_files_green.id
@@ -113,7 +113,7 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
     }
   }
 
-  file_system_locations {
+  file_system_location {
     type = "EFS"
     identifier = "BLUE"
     location = "${aws_efs_file_system.admin_files.id}:/"
