@@ -62,10 +62,10 @@ resource "aws_subnet" "private_admin_api" {
 
 ######## Subnet for CodeBuild #######
 resource "aws_subnet" "private_codebuild" {
-  count                   = length(var.private_admin_api)
+  count                   = length(var.private_codebuild)
   
   vpc_id                  = aws_vpc.main_vpc.id
-  cidr_block              = element(var.private_admin_api,count.index)
+  cidr_block              = element(var.private_codebuild,count.index)
   availability_zone       = element(var.azs,count.index)
   map_public_ip_on_launch = false
   tags = {
