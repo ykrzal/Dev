@@ -91,7 +91,7 @@ resource "aws_security_group" "allow_all_traffic_from_alb" {
 ############ Allow_all_local_to_EFS #################
 #####################################################
 resource "aws_security_group" "admin_site_efs" {
-  name        = "admin-site-efs-sg"
+  name        = "boopos-admin-site-efs-sg"
   vpc_id      = aws_vpc.main_vpc.id
 
   ingress {
@@ -103,7 +103,7 @@ resource "aws_security_group" "admin_site_efs" {
   }
 
   tags = {
-    Name             = "admin-site-efs-sg"
+    Name             = "boopos-admin-site-efs-sg"
   }
 }
 
@@ -130,7 +130,7 @@ resource "aws_security_group" "vpn" {
 ################# AWS CodeBuild SG ##################
 #####################################################
 resource "aws_security_group" "codebuild" {
-  name               = "codebuild-sg"
+  name               = "boopos-codebuild-sg"
   vpc_id             = aws_vpc.main_vpc.id
 
   ingress {
@@ -148,6 +148,6 @@ resource "aws_security_group" "codebuild" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name             = "codebuild-sg"
+    Name             = "boopos-codebuild-sg"
   }
 }
