@@ -56,7 +56,7 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
   file_system_locations {
     type = "EFS"
     identifier = "GREEN"
-    location = "${aws_efs_file_system.admin_files_green}"
+    location = "${aws_efs_file_system.admin_files_green.id}"
     mount_point = "/mnt/efs"
   }
 
