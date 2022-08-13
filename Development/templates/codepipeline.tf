@@ -122,6 +122,13 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
     mount_point                 = "/mnt/efs"
   }
 
+  file_system_locations {
+    type                        = "EFS"
+    identifier                  = "GREEN"
+    location                    = "${aws_efs_file_system.admin_files_green.id}.efs.us-east-2.amazonaws.com:/"
+    mount_point                 = "/mnt/efs"
+  }
+
   source {
     type      = "CODEPIPELINE"
     buildspec = "Development/templates/buildspec/buildspec_deploy_staticsite.yml"
