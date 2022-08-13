@@ -68,7 +68,6 @@ resource "aws_security_group" "alb" {
 resource "aws_security_group" "allow_all_traffic_from_alb" {
   name               = "boopos-adminsite-sg"
   vpc_id             = aws_vpc.main_vpc.id
-  description = "allow inbound access from the ALB only"
 
   ingress {
     protocol        = "tcp"
@@ -133,7 +132,6 @@ resource "aws_security_group" "vpn" {
 resource "aws_security_group" "codebuild" {
   name               = "codebuild-sg"
   vpc_id             = aws_vpc.main_vpc.id
-  description = "attach to codebuild traffic"
 
   ingress {
     from_port        = 0
