@@ -1,5 +1,15 @@
+############### Main Vars ######################
+
+variable "region" {
+  default = "us-east-2"
+}
+
+variable "environment" {
+  default = "dev"
+}
+
 ################################################
-################# Variables ####################
+################### Network ####################
 ################################################
 
 ############### VPC CIRD block #################
@@ -31,7 +41,13 @@ variable "private_admin_api" {
 	default = ["10.10.15.0/24", "10.10.16.0/24"]
 }
 
-############### Public Subnets #################
+########## Private Codebuild Subnets #############
+variable "private_codebuild" {
+	type = list
+	default = ["10.10.17.0/24", "10.10.18.0/24"]
+}
+
+############### Public Subnets ###################
 variable "public" {
 	type = list
 	default = ["10.10.1.0/24", "10.10.2.0/24"]
@@ -42,6 +58,11 @@ variable "azs" {
 	type = list
 	default = ["us-east-2a", "us-east-2b"]
 }
+
+#################################################
+################### Tags ########################
+#################################################
+
 
 ############### VPC Name (Tag) ##################
 variable "vpc_name" {
@@ -63,15 +84,19 @@ variable "alb_name" {
 	default = "development-alb"
 }
 
+######## ALB access log bucket TAG ###############
+variable "accesslog_bucket_tag" {
+	default = "delelopment-boopos-alb-s3"
+}
+
 ######## ALB access log bucket name ##############
 variable "accesslog_bucket_name" {
 	default = "boopos-bucket-access-logs"
 }
 
-######## ALB access log bucket TAG ###############
-variable "accesslog_bucket_tag" {
-	default = "delelopment-boopos-alb-s3"
-}
+##################################################
+################## ECS APPS ######################
+##################################################
 
 ######## Fargate task CPU (Admin) ################
 variable "admin_cpu" {
@@ -96,16 +121,18 @@ variable "health_check_path" {
   default = "/"
 }
 
+################# ECS Role #########################
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
   default = "myEcsTaskExecutionRole"
 }
 
+################# ASG Name #########################
 variable "ecs_auto_scale_role_name" {
   description = "ECS auto scale role Name"
   default = "myEcsAutoScaleRole"
 }
-
+############## Admin app ports #####################
 variable "admin_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 8080
@@ -121,41 +148,9 @@ variable "admin_container_port" {
   default     = 80
 }
 
-variable "admin_ecs_min_instances" {
-  default = "1"
-}
-
-variable "admin_ecs_max_instances" {
-  default = "2"
-}
-
-variable "environment" {
-  default = "dev"
-}
-
-variable "region" {
-  default = "us-east-2"
-}
-
-variable "replicas" {
-  default = "1"
-}
-
-variable "admin_repository_branch" {
-  description = "Repository branch to connect to"
-  default     = "develop"
-}
-
-variable "admin_repository_owner" {
-  description = "GitHub repository owner"
-  default     = "ykrzal"
-}
-
-variable "admin_repository_name" {
-  description = "GitHub repository name"
-  default     = "infrastructure"
-}
-
+############## GitHub Connection #####################
 variable "connections_connection" {
   default     = "arn:aws:codestar-connections:us-east-1:198448550418:connection/6f401858-208b-4c19-abb9-8571f994e437"
 }
+
+

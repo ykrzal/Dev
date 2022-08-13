@@ -14,14 +14,14 @@ resource "aws_subnet" "public" {
   availability_zone       = element(var.azs,count.index)
   map_public_ip_on_launch = true
   tags = {
-    Name                  = "PublicSubnet-${count.index+1}"
+    Name                  = "publicsubnet-${count.index+1}"
   }
 }
 
 #####################################################
 ################## Private subnets ##################
 #####################################################
-
+####### Private subnets #######
 resource "aws_subnet" "private" {
   count                   = length(var.private)
   
@@ -30,11 +30,11 @@ resource "aws_subnet" "private" {
   availability_zone       = element(var.azs,count.index)
   map_public_ip_on_launch = false
   tags = {
-    Name                  = "PrivateSubnet-${count.index+1}"
+    Name                  = "privatesubnet-${count.index+1}"
   }
 }
 
-######## Subnet for Admin static site
+######## Subnet for Admin static site #######
 resource "aws_subnet" "private_admin" {
   count                   = length(var.private_admin)
   
@@ -43,11 +43,11 @@ resource "aws_subnet" "private_admin" {
   availability_zone       = element(var.azs,count.index)
   map_public_ip_on_launch = false
   tags = {
-    Name                  = "PrivateSubnet-Admin-${count.index+1}"
+    Name                  = "privatesubnet-admin-${count.index+1}"
   }
 }
 
-######## Subnet for Admin API 
+######## Subnet for Admin API #######
 resource "aws_subnet" "private_admin_api" {
   count                   = length(var.private_admin_api)
   
@@ -56,6 +56,19 @@ resource "aws_subnet" "private_admin_api" {
   availability_zone       = element(var.azs,count.index)
   map_public_ip_on_launch = false
   tags = {
-    Name                  = "PrivateSubnet-Admin-Api-${count.index+1}"
+    Name                  = "privatesubnet-admin-api-${count.index+1}"
+  }
+}
+
+######## Subnet for CodeBuild #######
+resource "aws_subnet" "private_codebuild" {
+  count                   = length(var.private_admin_api)
+  
+  vpc_id                  = aws_vpc.main_vpc.id
+  cidr_block              = element(var.private_admin_api,count.index)
+  availability_zone       = element(var.azs,count.index)
+  map_public_ip_on_launch = false
+  tags = {
+    Name                  = "privatesubnet-admin-api-${count.index+1}"
   }
 }

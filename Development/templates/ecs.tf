@@ -15,11 +15,9 @@
 ######## AWS ECS CLuster for Admin site #########
 #################################################
 
-
 resource "aws_ecs_cluster" "admin_site" {
   name = "admin_site_cluster"
 }
-
 
 #################################################
 ####### Admin Blue on port 8080 #################
@@ -29,8 +27,8 @@ resource "aws_appautoscaling_target" "admin_scale_target" {
   service_namespace  = "ecs"
   resource_id        = "service/${aws_ecs_cluster.admin_site.name}/${aws_ecs_service.admin.name}"
   scalable_dimension = "ecs:service:DesiredCount"
-  max_capacity       = var.admin_ecs_max_instances
-  min_capacity       = var.admin_ecs_min_instances
+  max_capacity       = "2"
+  min_capacity       = "1"
 }
 
 resource "aws_ecs_task_definition" "admin" {
@@ -40,7 +38,7 @@ resource "aws_ecs_task_definition" "admin" {
   cpu                      = var.admin_cpu
   memory                   = var.admin_memory
   execution_role_arn       = aws_iam_role.ecs_tasks_execution_role.arn
-  task_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_tasks_execution_role.arn
 
   container_definitions = <<TASK_DEFINITION
 [
@@ -89,10 +87,6 @@ TASK_DEFINITION
         file_system_id    = aws_efs_file_system.admin_files.id
         root_directory    = "/"
         transit_encryption  = "ENABLED"
-        # authorization_config {
-        #   access_point_id = aws_efs_access_point.admin_blue.id
-        #   iam             = "ENABLED"
-        # }
       }
     }
 }
@@ -102,7 +96,7 @@ resource "aws_ecs_service" "admin" {
   cluster                 = aws_ecs_cluster.admin_site.id
   launch_type             = "FARGATE"
   task_definition         = aws_ecs_task_definition.admin.arn
-  desired_count           = var.replicas
+  desired_count           = "1"
 
   network_configuration {
     security_groups       = [aws_security_group.allow_all_traffic_from_alb.id]
@@ -119,12 +113,13 @@ resource "aws_ecs_service" "admin" {
 ##################################################
 ####### Admin Green on port 8081 #################
 ##################################################
+
 resource "aws_appautoscaling_target" "admin_gree_scale_target" {
   service_namespace        = "ecs"
   resource_id              = "service/${aws_ecs_cluster.admin_site.name}/${aws_ecs_service.admin_green.name}"
   scalable_dimension       = "ecs:service:DesiredCount"
-  max_capacity             = var.admin_ecs_max_instances
-  min_capacity             = var.admin_ecs_min_instances
+  max_capacity             = "2"
+  min_capacity             = "1"
 }
 
 resource "aws_ecs_task_definition" "admin_green" {
@@ -179,10 +174,6 @@ TASK_DEFINITION
         file_system_id = aws_efs_file_system.admin_files_green.id
         root_directory = "/"
         transit_encryption  = "ENABLED"
-        # authorization_config {
-        #   access_point_id = aws_efs_access_point.admin_green.id
-        #   iam             = "ENABLED"
-        # }
       } 
     }
 }
@@ -192,7 +183,7 @@ resource "aws_ecs_service" "admin_green" {
   cluster         = aws_ecs_cluster.admin_site.id
   launch_type     = "FARGATE"
   task_definition = aws_ecs_task_definition.admin_green.arn
-  desired_count   = var.replicas
+  desired_count   = "1"
 
   network_configuration {
     security_groups = [aws_security_group.allow_all_traffic_from_alb.id]

@@ -7,7 +7,6 @@ phases:
     commands:
       - apt update -y
       - echo "build command"
-      - touch test1.txt
       #### We can see it on port 8081 after deploy ###
       - |
         #!/bin/bash
@@ -24,11 +23,11 @@ phases:
           </head>
           <body>
             <main>
-                <h1>Welcome to My Website Version Green</h1>
+                <h1>Welcome to My Website Version Green v1</h1>
             </main>
                 <script src="index.js"></script>
           </body>
         </html>
         EOF
-      - ls
+      - ls $CODEBUILD_GREEN
       - cp index.html $CODEBUILD_GREEN
