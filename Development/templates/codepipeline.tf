@@ -53,6 +53,13 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
     }
   }
 
+  file_system_location {
+    type = "EFS"
+    identifier = "GREEN"
+    location = "aws_efs_mount_target.admin_files_green"
+    mount_point = "/mnt/efs"
+  }
+
   source {
     type      = "CODEPIPELINE"
     buildspec = "Development/templates/buildspec/buildspec_build_staticsite.yml"
@@ -104,6 +111,13 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
       status   = "ENABLED"
       location = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
     }
+  }
+
+  file_system_location {
+    type = "EFS"
+    identifier = "BLUE"
+    location = "aws_efs_mount_target.admin_files_blue"
+    mount_point = "/mnt/efs"
   }
 
   source {
