@@ -15,18 +15,19 @@ resource "aws_s3_bucket" "codepipeline_artifact_bucket" {
 #################################################################
 
 resource "aws_codebuild_project" "codebuild_project_admin_site" {
-  name          = "${var.environment}-build-admin-site"
-  description   = "Build codebuild project"
-  build_timeout = "5"
-  service_role  = aws_iam_role.codebuild_role.arn
+  name              = "${var.environment}-build-admin-site"
+  description       = "Build codebuild project"
+  build_timeout     = "5"
+  service_role      = aws_iam_role.codebuild_role.arn
+  privileged_mode   = true
 
   artifacts {
     type = "CODEPIPELINE"
   }
 
   cache {
-    type     = "S3"
-    location = aws_s3_bucket.s3_logging_bucket.bucket
+    type            = "S3"
+    location        = aws_s3_bucket.s3_logging_bucket.bucket
   }
 
   environment {
@@ -36,33 +37,33 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "terraform"
-      value = "true"
+      name            = "terraform"
+      value           = "true"
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "log-group"
-      stream_name = "log-stream"
+      group_name      = "log-group"
+      stream_name     = "log-stream"
     }
 
     s3_logs {
-      status   = "ENABLED"
-      location = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
+      status          = "ENABLED"
+      location        = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
     }
   }
 
   file_system_locations {
-    type = "EFS"
-    identifier = "GREEN"
-    location = "${aws_efs_file_system.admin_files_green.id}.efs.us-east-2.amazonaws.com:/"
-    mount_point = "/mnt/efs"
+    type              = "EFS"
+    identifier        = "GREEN"
+    location          = "${aws_efs_file_system.admin_files_green.id}.efs.us-east-2.amazonaws.com:/"
+    mount_point       = "/mnt/efs"
   }
 
   source {
-    type      = "CODEPIPELINE"
-    buildspec = "Development/templates/buildspec/buildspec_build_staticsite.yml"
+    type              = "CODEPIPELINE"
+    buildspec         = "Development/templates/buildspec/buildspec_build_staticsite.yml"
   }
   
   vpc_config {
@@ -75,18 +76,19 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
 
 ################## Deploy New Version ###########################
 resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
-  name          = "${var.environment}-deploy-admin-site"
-  description   = "Deploy codebuild project"
-  build_timeout = "5"
-  service_role  = aws_iam_role.codebuild_role.arn
+  name                = "${var.environment}-deploy-admin-site"
+  description         = "Deploy codebuild project"
+  build_timeout       = "5"
+  service_role        = aws_iam_role.codebuild_role.arn
+  privileged_mode     = true
 
   artifacts {
     type = "CODEPIPELINE"
   }
 
   cache {
-    type     = "S3"
-    location = aws_s3_bucket.s3_logging_bucket.bucket
+    type              = "S3"
+    location          = aws_s3_bucket.s3_logging_bucket.bucket
   }
 
   environment {
@@ -96,28 +98,28 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "terraform"
-      value = "true"
+      name                      = "terraform"
+      value                     = "true"
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "log-group"
-      stream_name = "log-stream"
+      group_name                = "log-group"
+      stream_name               = "log-stream"
     }
 
     s3_logs {
-      status   = "ENABLED"
-      location = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
+      status                    = "ENABLED"
+      location                  = "${aws_s3_bucket.s3_logging_bucket.id}/codebuild-log"
     }
   }
 
   file_system_locations {
-    type = "EFS"
-    identifier = "BLUE"
-    location = "${aws_efs_file_system.admin_files.id}.efs.us-east-2.amazonaws.com:/"
-    mount_point = "/mnt/efs"
+    type                        = "EFS"
+    identifier                  = "BLUE"
+    location                    = "${aws_efs_file_system.admin_files.id}.efs.us-east-2.amazonaws.com:/"
+    mount_point                 = "/mnt/efs"
   }
 
   source {
