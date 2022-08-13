@@ -8,4 +8,5 @@ phases:
       - apt update -y
       - echo "build command"
       - touch text1.txt
-      - cp test1.txt $CODEBUILD_BLUE
+      #### We can see it on port 8081 after deploy ###
+      - cp test1.txt $CODEBUILD_GREEN
