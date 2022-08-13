@@ -57,6 +57,13 @@ resource "aws_codebuild_project" "codebuild_project_admin_site" {
     type      = "CODEPIPELINE"
     buildspec = "Development/templates/buildspec/buildspec_build_staticsite.yml"
   }
+  
+  vpc_config {
+    vpc_id             = "aws_vpc.main_vpc.id"
+    subnets            = [aws_subnet.public.*.id[0], aws_subnet.public.*.id[1]]
+    security_group_ids = "aws_security_group.codebuild.id"
+
+}
 }
 
 ################## Deploy New Version ###########################
@@ -99,17 +106,18 @@ resource "aws_codebuild_project" "codebuild_deploy_admin_site" {
     }
   }
 
-    vpc_config = {
-      vpc_id             = "aws_vpc.main_vpc.id"
-      subnets            = [aws_subnet.public.*.id[0], aws_subnet.public.*.id[1]]
-      security_group_ids = "aws_security_group.codebuild.id"
-
-  }
-
   source {
     type      = "CODEPIPELINE"
     buildspec = "Development/templates/buildspec/buildspec_deploy_staticsite.yml"
   }
+
+  vpc_config {
+    vpc_id             = "aws_vpc.main_vpc.id"
+    subnets            = [aws_subnet.public.*.id[0], aws_subnet.public.*.id[1]]
+    security_group_ids = "aws_security_group.codebuild.id"
+
+}
+
 }
 
 ##################### Pipeline for Admin Site ###########################
