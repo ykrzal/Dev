@@ -1,4 +1,4 @@
-vversion: 0.2
+version: 0.2
 
 phases:
   install:
@@ -30,4 +30,4 @@ phases:
         </html>
         EOF
       - ls
-      - cp $CODEBUILD_GREEN $CODEBUILD_BLUE
+      - cp $CODEBUILD_GREEN $CODEBUILD_BLUE 
