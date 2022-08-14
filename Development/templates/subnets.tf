@@ -21,7 +21,7 @@ resource "aws_subnet" "public" {
 #####################################################
 ################## Private subnets ##################
 #####################################################
-####### Private subnets #######
+####### Private subnets #####################
 resource "aws_subnet" "private" {
   count                   = length(var.private)
   
@@ -47,7 +47,7 @@ resource "aws_subnet" "private_admin" {
   }
 }
 
-######## Subnet for Admin API #######
+######## Subnet for Admin API ##############
 resource "aws_subnet" "private_admin_api" {
   count                   = length(var.private_admin_api)
   
@@ -60,7 +60,7 @@ resource "aws_subnet" "private_admin_api" {
   }
 }
 
-######## Subnet for CodeBuild #######
+######## Subnet for CodeBuild ##############
 resource "aws_subnet" "private_codebuild" {
   count                   = length(var.private_codebuild)
   

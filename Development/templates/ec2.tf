@@ -4,6 +4,7 @@ resource "aws_instance" "vpn" {
   ami                         = "ami-051dfed8f67f095f5"
   #key_name                   = aws_key_pair.key_pair.id
   associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.ssm_role.name
   vpc_security_group_ids      = [aws_security_group.vpn.id]
   subnet_id                   = aws_subnet.private_admin.*.id[0]
   

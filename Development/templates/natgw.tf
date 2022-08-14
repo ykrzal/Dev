@@ -8,10 +8,6 @@ resource "aws_eip" "nat" {
   vpc           = true
 }
 
-# resource "aws_eip" "vpn" {
-#   vpc           = true
-# }
-
 resource "aws_nat_gateway" "natgw" {
   count         = length(var.private)
 

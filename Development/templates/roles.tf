@@ -46,29 +46,6 @@ resource "aws_iam_role_policy" "flowlogrole" {
 EOF
 }
 
-#####
-
-# resource "aws_iam_role" "ecs_tasks_execution_role" {
-#   name               = "${var.environment}-boopos-admin-ecs"
-#   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-# }
-
-# data "aws_iam_policy_document" "assume_role_policy" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
-
-#     principals {
-#       type        = "Service"
-#       identifiers = ["ecs-tasks.amazonaws.com"]
-#     }
-#   }
-# }
-
-# resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
-#   role       = aws_iam_role.ecsTaskExecutionRole.name
-#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-# }
-
 #####################################################
 ############# ECS execution Role ####################
 #####################################################
@@ -253,24 +230,3 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 }
 EOF
 }
-
-# data "aws_iam_policy_document" "codepipeline_role" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
-
-#     principals {
-#       type        = "Service"
-#       identifiers = ["codepipeline.amazonaws.com"]
-#     }
-#   }
-# }
-
-# resource "aws_iam_role" "codepipeline_role" {
-#   name               = "${var.environment}-codepipeline_role"
-#   assume_role_policy = "${data.aws_iam_policy_document.codepipeline_role.json}"
-# }
-
-# resource "aws_iam_role_policy_attachment" "codepipeline_role" {
-#   role       = "${aws_iam_role.codepipeline_role.name}"
-#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-# }
