@@ -17,8 +17,7 @@ module "templates" {
 }
 
 provider "vault" {
-    VAULT_ADDR = VAULT_ADDR
-    VAULT_TOKEN = VAULT_TOKEN
+
 }
 
 # provider "vault" {
