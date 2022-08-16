@@ -8,5 +8,5 @@ resource "aws_route53_record" "www" {
   name    = "test3.zoom.dns"
   type    = "A"
   ttl     = 300
-  records = aws_route53_zone.zoom_dns.name_servers
+  records = aws_eip.vpn
 }
