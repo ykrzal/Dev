@@ -16,9 +16,9 @@ module "templates" {
   source = "./templates"
 }
 
-provider "vault" {
+# provider "vault" {
 
-}
+# }
 
 # provider "vault" {
 #     VAULT_ADDR = "https://vault-cluster-public-vault-491ec396.2442a5d1.z1.hashicorp.cloud:8200/"
