@@ -8,5 +8,5 @@ resource "aws_route53_record" "www" {
   name    = "test3.zoom.dns"
   type    = "A"
   ttl     = 300
-  records = aws_eip.vpn.public_ip
+  records = "test3.zoom.dns"
 }
