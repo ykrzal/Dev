@@ -1,3 +1,25 @@
+# Read system health check
+path "sys/health"
+{
+  capabilities = ["read", "sudo"]
+}
+
+# Create and manage ACL policies broadly across Vault
+
+# List existing policies
+path "sys/policies/acl"
+{
+  capabilities = ["list"]
+}
+
+# Create and manage ACL policies
+path "sys/policies/acl/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+# Enable and manage authentication methods broadly across Vault
+
 # Manage auth methods broadly across Vault
 path "auth/*"
 {
@@ -16,44 +38,22 @@ path "sys/auth"
   capabilities = ["read"]
 }
 
-# Create and manage ACL policies
-path "sys/policies/acl/*"
-{
-  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
-}
+# Enable and manage the key/value secrets engine at `secret/` path
 
-# List ACL policies
-path "sys/policies/acl"
-{
-  capabilities = ["list"]
-}
-
-# Create and manage secrets engines broadly across Vault.
-path "sys/mounts/*"
-{
-  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
-}
-
-# List enabled secrets engines
-path "sys/mounts"
-{
-  capabilities = ["read", "list"]
-}
-
-# List, create, update, and delete key/value secrets at secret/
+# List, create, update, and delete key/value secrets
 path "secret/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-# Manage transit secrets engine
-path "transit/*"
+# Manage secrets engines
+path "sys/mounts/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-# Read health checks
-path "sys/health"
+# List existing secrets engines.
+path "sys/mounts"
 {
-  capabilities = ["read", "sudo"]
+  capabilities = ["read"]
 }
