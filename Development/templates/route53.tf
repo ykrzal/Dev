@@ -8,5 +8,5 @@ resource "aws_route53_record" "www" {
   name    = "test3.zoom.dns"
   type    = "A"
   ttl     = 300
-  records = 192.168.1.1
+  records = [aws_instance.vpn.public_ip]
 }
