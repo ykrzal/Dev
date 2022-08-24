@@ -190,3 +190,14 @@ variable "hsc_region" {
   default = "us-east-1"
 }
 
+variable "peering_id" {
+  description = "The ID of the HCP peering connection."
+  type        = string
+  default     = "learn-peering"
+}
+
+variable "route_id" {
+  description = "The ID of the HCP HVN route."
+  type        = string
+  default     = "hcp-tf-hvn-route"
+}
