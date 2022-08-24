@@ -186,3 +186,7 @@ variable "tier" {
   default     = "dev"
 }
 
+variable "hsc_region" {
+  default = "us-east-1"
+}
+
