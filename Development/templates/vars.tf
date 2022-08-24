@@ -157,4 +157,32 @@ variable "connections_connection" {
   default     = "arn:aws:codestar-connections:us-east-1:198448550418:connection/6f401858-208b-4c19-abb9-8571f994e437"
 }
 
+####################################################
+############## Hashicorp Vault vars ################
+####################################################
+
+variable "hvn_id" {
+  description = "The ID of the HCP HVN."
+  type        = string
+  default     = "hcp-tf-vault-hvn"
+}
+
+variable "cluster_id" {
+  description = "The ID of the HCP Vault cluster."
+  type        = string
+  default     = "hashicorp-tf-vault-cluster"
+}
+
+
+variable "cloud_provider" {
+  description = "The cloud provider of the HCP HVN and Vault cluster."
+  type        = string
+  default     = "aws"
+}
+
+variable "tier" {
+  description = "Tier of the HCP Vault cluster. Valid options for tiers."
+  type        = string
+  default     = "dev"
+}
 
