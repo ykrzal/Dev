@@ -50,7 +50,7 @@ resource "hcp_hvn_route" "peer_route" {
   hvn_link         = hcp_hvn.hcp_tf_hvn.self_link
   hvn_route_id     = var.route_id
   destination_cidr = aws_vpc.main_vpc.cidr_block
-  target_link      = hcp_aws_network_peering.main_vpc.self_link
+  target_link      = hcp_aws_network_peering.peer.self_link
 }
 
 resource "aws_vpc_peering_connection_accepter" "main_vpc" {
