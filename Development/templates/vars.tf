@@ -193,11 +193,11 @@ variable "hsc_region" {
 variable "peering_id" {
   description = "The ID of the HCP peering connection."
   type        = string
-  default     = "learn-peering"
+  default     = "aws-peering-connection"
 }
 
 variable "route_id" {
   description = "The ID of the HCP HVN route."
   type        = string
-  default     = "hcp-tf-hvn-route"
+  default     = "route_id_for_hcp_peering"
 }
