@@ -199,5 +199,5 @@ variable "peering_id" {
 variable "route_id" {
   description = "The ID of the HCP HVN route."
   type        = string
-  default     = "route_id_for_hcp_peering"
+  default     = "route_id_peer"
 }
