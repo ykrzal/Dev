@@ -79,10 +79,18 @@ resource "aws_route_table_association" "nat_rt_codebuuild" {
 
 
 #### route
-resource "aws_route" "peer" {
+resource "aws_route" "peer_nat" {
   count                     = length(var.private)
   
   route_table_id            = element(aws_route_table.nat_rt.*.id,count.index)
+  destination_cidr_block    = hcp_hvn.hcp_tf_hvn.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection_accepter.main_vpc.id
+  
+}
+
+#### route
+resource "aws_route" "peer_pub" {
+  route_table_id            = aws_route_table.public_rt.id
   destination_cidr_block    = hcp_hvn.hcp_tf_hvn.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection_accepter.main_vpc.id
   
