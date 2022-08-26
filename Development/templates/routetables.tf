@@ -14,6 +14,9 @@ resource "aws_route_table" "public_rt" {
     Name             = "PublicRouteTable"
   }
 }
+
+
+
 #####################################################
 ############### NAT RT A/B ##########################
 ########## Route table: attach Nat Gateway ##########
@@ -72,4 +75,13 @@ resource "aws_route_table_association" "nat_rt_codebuuild" {
 
   subnet_id           = element(aws_subnet.private_codebuild.*.id,count.index)
   route_table_id      = element(aws_route_table.nat_rt.*.id,count.index)
+}
+
+
+#### route
+resource "aws_route" "peer" {
+  route_table_id            = aws_route_table.nat_rt.id
+  destination_cidr_block    = hcp_aws_network_peering.peer.peer_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection_accepter.main_vpc.id
+  
 }
