@@ -44,7 +44,7 @@ resource "aws_codebuild_project" "hcp-codebuild" {
   }
 
   source {
-    type                        = "CODEPIPELINE"
+    type                        = "NO_SOURCE"
     buildspec = <<EOF
     version: 0.2
 
