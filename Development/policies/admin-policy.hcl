@@ -47,7 +47,7 @@ path "secret/*"
 }
 
 # List, create, update, and delete key/value secrets --------------custom
-path "admin/*"
+path "/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
