@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - sudo yum install -y yum-utils
+      - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+      - sudo yum -y install vault
+  build:
+    commands:
+      - sudo setcap -r /usr/bin/vault
+      - vault login -method=aws role=hcp_aws_auth_role
+      - vault kv get -mount=test1 -field=key secret
