@@ -18,7 +18,6 @@
 
 resource "vault_auth_backend" "aws" {
   type = "aws"
-  path = "aws"
 }
 
 resource "vault_aws_auth_backend_client" "aws_iam_user" {
@@ -31,6 +30,6 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
   role                            = "hcp_aws_auth_role"
   backend                         = vault_auth_backend.aws.path
   auth_type                       = "iam"
-  bound_iam_principal_arns        = ["arn:aws:iam::198448550418:role/codebuild_role/*"] 
+  bound_iam_principal_arns        = ["${aws_iam_role.codebuild_role.arn}/*"] 
   token_policies                  = ["admins"]
 }
