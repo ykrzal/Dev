@@ -22,7 +22,7 @@ resource "aws_codebuild_project" "hcp-codebuild" {
 
     environment_variable {
       name                      = "VAULT_ADDR"
-      value                     = hcp_vault_cluster.hcp_tf_vault.vault_private_endpoint_url
+      value                     = hcp_vault_cluster.hcp_tf_vault.vault_public_endpoint_url
     }
     environment_variable {
       name                      = "VAULT_NAMESPACE"
