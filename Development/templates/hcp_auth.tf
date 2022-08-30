@@ -18,7 +18,6 @@
 
 resource "vault_auth_backend" "aws" {
   type = "aws"
-  path = "/auth/aws/role/"
 }
 
 resource "vault_aws_auth_backend_client" "aws_iam_user" {
