@@ -22,6 +22,7 @@ resource "vault_auth_backend" "aws" {
 
 resource "vault_aws_auth_backend_sts_role" "hcp_role" {
   backend    = vault_auth_backend.aws.path
+  account_id = "${data.aws_caller_identity.current.account_id}"
   sts_role   = aws_iam_role.codebuild_role.arn
 }
 
