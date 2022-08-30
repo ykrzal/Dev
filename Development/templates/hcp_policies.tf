@@ -1,6 +1,6 @@
 resource "vault_policy" "admin_policy" {
   name   = "admins"
-  policy = file("policies/admin-policy.hcl")
+  policy = file("policies/admins-policy.hcl")
 }
 
 # # Create 'training' policy
