@@ -29,7 +29,7 @@ resource "vault_terraform_cloud_secret_backend" "terraform" {
 resource "vault_terraform_cloud_secret_role" "terraform_role" {
   backend      = vault_terraform_cloud_secret_backend.terraform.backend
   name         = "terraform-role"
-  organization = "$TF_ORGANIZATION"
+  organization = "TerraCloudZoom"
 }
 
 resource "vault_terraform_cloud_secret_creds" "token" {
