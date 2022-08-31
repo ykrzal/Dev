@@ -19,18 +19,18 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 }
 
 
-#Creates token for Terraform Cloud auth
-# resource "vault_terraform_cloud_secret_backend" "terraform" {
-#   backend     = "terraform"
-#   description = "Manages the Terraform Cloud backend"
-#   token       = "7ge2opZChff8dQ.atlasv1.QFX5DIBhhkSKDnW2w2cdz8lWqYRpKZwVVDbRzwU9Tyz3vWtpezwqMaMmjXLOBLgZO2g"
-# }
+Creates token for Terraform Cloud auth
+resource "vault_terraform_cloud_secret_backend" "terraform" {
+  backend     = "terraform"
+  description = "Manages the Terraform Cloud backend"
+  token       = "7ge2opZChff8dQ.atlasv1.QFX5DIBhhkSKDnW2w2cdz8lWqYRpKZwVVDbRzwU9Tyz3vWtpezwqMaMmjXLOBLgZO2g"
+}
 
-# resource "vault_terraform_cloud_secret_role" "terraform_role" {
-#   backend      = vault_terraform_cloud_secret_backend.terraform.backend
-#   name         = "terraform-role"
-#   organization = "TerraCloudZoom"
-# }
+resource "vault_terraform_cloud_secret_role" "terraform_role" {
+  backend      = vault_terraform_cloud_secret_backend.terraform.backend
+  name         = "terraform-role"
+  organization = "TerraCloudZoom"
+}
 
 # resource "vault_terraform_cloud_secret_creds" "token" {
 #   backend = vault_terraform_cloud_secret_backend.terraform.backend
