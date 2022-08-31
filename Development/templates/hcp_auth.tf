@@ -21,8 +21,7 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 
 #Creates token for service auth
 resource "vault_token" "hcp_vault_token" {
-  role_name                  = "hcp_vault_auth_role"
-
+  # role_name                  = "hcp_vault_auth_role"
   policies                   = ["admins"]
   no_parent                  = true
   renewable                  = false
