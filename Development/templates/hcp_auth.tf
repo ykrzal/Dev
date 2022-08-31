@@ -19,7 +19,7 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 }
 
 
-Creates token for Terraform Cloud auth
+#Creates token for Terraform Cloud auth
 resource "vault_terraform_cloud_secret_backend" "terraform" {
   backend     = "terraform"
   description = "Manages the Terraform Cloud backend"
