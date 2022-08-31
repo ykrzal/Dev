@@ -21,9 +21,9 @@ module "templates" {
   source = "./templates"
 }
 
-provider "vault" {
-  
-}
+# provider "vault" {
+
+# }
 
 provider "hcp" {}
 
