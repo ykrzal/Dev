@@ -1,20 +1,7 @@
-# resource "vault_auth_backend" "userpass" {
-#   type = "userpass"
-# }
-
-# # Create a user, 'student'
-# resource "vault_generic_endpoint" "student" {
-#   depends_on           = [vault_auth_backend.userpass]
-#   path                 = "auth/userpass/users/student"
-#   ignore_absent_fields = true
-
-#   data_json = <<EOT
-# {
-#   "policies": ["admins", "eaas-client"],
-#   "password": "test"
-# }
-# EOT
-# }
+provider "vault" {
+  address =  hcp_vault_cluster.hcp_tf_vault.vault_public_endpoint_url
+  token   =  vault_token.hcp_vault_token.client_token
+}
 
 
 ###   AWS auth method enabling ####
