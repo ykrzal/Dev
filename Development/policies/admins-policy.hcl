@@ -64,6 +64,6 @@ path "sys/mounts"
   capabilities = ["read"]
 }
 
-path "auth/token/create" {
+path "token/create" {
 capabilities = ["create", "read", "update", "list"]
 }
