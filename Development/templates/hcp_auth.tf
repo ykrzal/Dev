@@ -31,7 +31,7 @@ resource "vault_terraform_cloud_secret_role" "terraform_role" {
   name         = "terraform-role"
   # organization = "TerraCloudZoom"
   # team_id      = "team-NVzVWmDsi42vMA1a"
-  user_id      =  "cherkes_ihor"
+  user_id      =  "ws-CjLR9piGBji9HG3G"
 }
 
 resource "vault_terraform_cloud_secret_creds" "token" {
