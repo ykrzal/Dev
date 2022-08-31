@@ -28,7 +28,7 @@ resource "vault_terraform_cloud_secret_backend" "terraform" {
 
 resource "vault_terraform_cloud_secret_role" "terraform_role" {
   backend      = vault_terraform_cloud_secret_backend.terraform.backend
-  name         = "terraform-role"
+  name         = "tf-role"
   organization = "TerraCloudZoom"
   team_id      = "team-NVzVWmDsi42vMA1a"
 }
