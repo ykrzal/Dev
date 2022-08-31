@@ -23,7 +23,7 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 resource "vault_terraform_cloud_secret_backend" "terraform" {
   backend     = "terraform"
   description = "Manages the Terraform Cloud backend"
-  token       = "yH9iblxxtMDMXA.atlasv1.zpDzu3yXTiHbjiBwmNuUi8prByRUzUSm8ledSlfJwb67sycg0cOPhYDxbsHzquF6snI"
+  token       = "zDKf3cBCzLfNTA.atlasv1.Ap977W9SUs5VnNcQz5G9Pyypdama1ag9JXnPSXlw5kCtmF4txzaEd3khjItJEN7eSuc"
 }
 
 resource "vault_terraform_cloud_secret_role" "terraform_role" {
@@ -34,7 +34,7 @@ resource "vault_terraform_cloud_secret_role" "terraform_role" {
   user_id      =  "cherkes_ihor"
 }
 
-# resource "vault_terraform_cloud_secret_creds" "token" {
-#   backend = vault_terraform_cloud_secret_backend.terraform.backend
-#   role    = vault_terraform_cloud_secret_role.terraform_role.name
-# }
+resource "vault_terraform_cloud_secret_creds" "token" {
+  backend = vault_terraform_cloud_secret_backend.terraform.backend
+  role    = vault_terraform_cloud_secret_role.terraform_role.name
+}
