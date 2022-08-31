@@ -23,14 +23,15 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 resource "vault_terraform_cloud_secret_backend" "terraform" {
   backend     = "terraform"
   description = "Manages the Terraform Cloud backend"
-  token       = "zRTj5lo3Jhzrqw.atlasv1.jFJMxPizmgSLz4nosubRSMRO679ki5qVLCBFUFvnxtSqIsdF3WBlycmA4vwSEXf3qus"
+  token       = "VNBcE28TuoDLzQ.atlasv1.PGOunq4DyhzPJNK4s5d1A6kuL5hnZoGnxyeobHmlMB3KyH4fkCQyWOVslCVPh7xPNNE"
 }
 
 resource "vault_terraform_cloud_secret_role" "terraform_role" {
   backend      = vault_terraform_cloud_secret_backend.terraform.backend
   name         = "terraform-role"
   # organization = "TerraCloudZoom"
-  team_id      = "team-NVzVWmDsi42vMA1a"
+  # team_id      = "team-NVzVWmDsi42vMA1a"
+  user_id      =  "cherkes_ihor"
 }
 
 # resource "vault_terraform_cloud_secret_creds" "token" {
