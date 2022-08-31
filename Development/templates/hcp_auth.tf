@@ -26,14 +26,14 @@ resource "vault_terraform_cloud_secret_backend" "terraform" {
   token       = "Bj9KpnEHf7QQsA.atlasv1.VTowgfV2GkhQvyXKsUJvgpLBRym8BAWM2HLet4WIlVEpwUmi3aCKEsAnPupa5bo67yQ"
 }
 
-resource "vault_terraform_cloud_secret_role" "terraform_role" {
-  backend      = vault_terraform_cloud_secret_backend.terraform.backend
-  name         = "tf-role"
-  organization = "TerraCloudZoom"
-  team_id      = "team-NVzVWmDsi42vMA1a"
-}
+# resource "vault_terraform_cloud_secret_role" "terraform_role" {
+#   backend      = vault_terraform_cloud_secret_backend.terraform.backend
+#   name         = "terraform-role"
+#   organization = "TerraCloudZoom"
+#   team_id      = "team-NVzVWmDsi42vMA1a"
+# }
 
-resource "vault_terraform_cloud_secret_creds" "token" {
-  backend = vault_terraform_cloud_secret_backend.terraform.backend
-  role    = vault_terraform_cloud_secret_role.terraform_role.name
-}
+# resource "vault_terraform_cloud_secret_creds" "token" {
+#   backend = vault_terraform_cloud_secret_backend.terraform.backend
+#   role    = vault_terraform_cloud_secret_role.terraform_role.name
+# }
