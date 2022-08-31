@@ -23,7 +23,7 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 resource "vault_terraform_cloud_secret_backend" "terraform" {
   backend     = "terraform"
   description = "Manages the Terraform Cloud backend"
-  token       = "VNBcE28TuoDLzQ.atlasv1.PGOunq4DyhzPJNK4s5d1A6kuL5hnZoGnxyeobHmlMB3KyH4fkCQyWOVslCVPh7xPNNE"
+  token       = "yH9iblxxtMDMXA.atlasv1.zpDzu3yXTiHbjiBwmNuUi8prByRUzUSm8ledSlfJwb67sycg0cOPhYDxbsHzquF6snI"
 }
 
 resource "vault_terraform_cloud_secret_role" "terraform_role" {
