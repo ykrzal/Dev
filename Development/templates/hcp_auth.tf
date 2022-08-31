@@ -20,6 +20,12 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
 
 
 #Creates token for service auth
+
+provider "vault" {
+  address =  hcp_vault_cluster.hcp_tf_vault.vault_public_endpoint_url
+  token   =  vault_token.hcp_vault_token.client_token
+}
+
 resource "vault_token" "hcp_vault_token" {
   # role_name                  = "hcp_vault_auth_role"
   policies                   = ["admins"]
