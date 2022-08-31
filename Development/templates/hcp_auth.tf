@@ -32,7 +32,7 @@ resource "vault_terraform_cloud_secret_role" "terraform_role" {
   user_id      = "cherkes_ihor"
 }
 
-# resource "vault_terraform_cloud_secret_creds" "token" {
-#   backend = vault_terraform_cloud_secret_backend.terraform.backend
-#   role    = vault_terraform_cloud_secret_role.terraform_role.name
-# }
+resource "vault_terraform_cloud_secret_creds" "token" {
+  backend = vault_terraform_cloud_secret_backend.terraform.backend
+  role    = vault_terraform_cloud_secret_role.terraform_role.name
+}
