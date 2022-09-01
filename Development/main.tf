@@ -21,9 +21,6 @@ module "templates" {
   source = "./templates"
 }
 
-module "hcp_cluster" {
-  source = "./"
-}
 
 provider "vault" {
   token      = hcp_vault_cluster_admin_token.hcp_vault_admin_token.token
