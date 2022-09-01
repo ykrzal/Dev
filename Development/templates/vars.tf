@@ -164,7 +164,7 @@ variable "connections_connection" {
 variable "hvn_id" {
   description = "The ID of the HCP HVN."
   type        = string
-  default     = "hcp-tf-vault-hvn1"
+  default     = "hcp-tf-vault-hvn"
 }
 
 variable "cluster_id" {
