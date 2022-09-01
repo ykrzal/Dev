@@ -1,4 +1,9 @@
 ###   AWS auth method enabling ####
+
+provider "vault" {
+  token      = hcp_vault_cluster_admin_token.hcp_vault_admin_token.token
+}
+
 resource "vault_auth_backend" "aws" {
   type                        = "aws"
 }
@@ -17,6 +22,16 @@ resource "vault_aws_auth_backend_role" "hcp_aws_access_role" {
   bound_iam_principal_arns   = [aws_iam_role.codebuild_role.arn] #Allows authorization for resources with such role attached
   token_policies             = ["admins"] #Defines policy for temp token.(find in )
 }
+
+
+
+
+
+
+
+
+
+
 
 
 # #Creates token for Terraform Cloud auth

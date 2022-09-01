@@ -22,10 +22,6 @@ module "templates" {
 }
 
 
-provider "vault" {
-  token      = hcp_vault_cluster_admin_token.hcp_vault_admin_token.token
-}
-
 provider "hcp" {}
 
 
