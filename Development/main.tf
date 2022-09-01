@@ -23,7 +23,5 @@ module "templates" {
 
 provider "hcp" {}
 
-provider "vault" {
-}
 
 
