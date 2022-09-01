@@ -21,7 +21,4 @@ module "templates" {
   source = "./templates"
 }
 
-provider "hcp" {}
-
-
 
