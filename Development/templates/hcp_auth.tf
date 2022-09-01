@@ -1,9 +1,5 @@
 ###   AWS auth method enabling ####
 
-provider "vault" {
-  token      = hcp_vault_cluster_admin_token.hcp_vault_admin_token.token
-}
-
 resource "vault_auth_backend" "aws" {
   type                        = "aws"
 }
