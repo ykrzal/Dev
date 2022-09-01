@@ -1,5 +1,9 @@
-###   AWS auth method enabling ####
+provider "vault" {
+  token      = module.templates.hcp_vault_cluster_admin_token.hcp_vault_admin_token.token
+}
 
+
+###   AWS auth method enabling ####
 resource "vault_auth_backend" "aws" {
   type                        = "aws"
 }
