@@ -9,6 +9,10 @@ resource "hcp_vault_cluster" "hcp_tf_vault" {
   cluster_id      = var.cluster_id
   tier            = var.tier
   public_endpoint = true
+
+  lifecycle {
+   prevent_destroy = true
+ }
 }
 
 resource "hcp_vault_cluster_admin_token" "hcp_vault_admin_token" {
