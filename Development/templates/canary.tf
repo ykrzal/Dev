@@ -92,5 +92,5 @@ resource "aws_s3_bucket" "canary_script" {
 resource "aws_s3_bucket_object" "canary_script" {
   key        = "canaryscript"
   bucket     = aws_s3_bucket.canary_script.id
-  source     = "index.js"
+  #source     = "index.js"
 }
