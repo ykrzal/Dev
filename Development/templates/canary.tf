@@ -7,7 +7,7 @@ resource "aws_synthetics_canary" "some" {
   runtime_version      = "syn-nodejs-puppeteer-3.6"
 
   schedule {
-    expression = "rate(5 minutes)"
+    expression = "rate(1 hour)"
   }
 }
 
@@ -20,7 +20,7 @@ resource "aws_synthetics_canary" "some1" {
   runtime_version      = "syn-nodejs-puppeteer-3.6"
 
   schedule {
-    expression = "rate(5 minutes)"
+    expression = "rate(1 hour)"
   }
 }
 
