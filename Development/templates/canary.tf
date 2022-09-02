@@ -1,6 +1,6 @@
 resource "aws_synthetics_canary" "some" {
   name                 = "canary"
-  artifact_s3_location = "s3://${aws_s3_bucket.canary_script}/"
+  artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "exports.handler"
   zip_file             = "index.js.zip"
