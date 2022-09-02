@@ -88,3 +88,9 @@ resource "aws_s3_bucket" "canary_script" {
     #force_destroy            = false
     force_destroy             = true
 }
+
+resource "aws_s3_bucket_object" "canary_script" {
+  key        = "canary_script"
+  bucket     = aws_s3_bucket.canary_script.id
+  source     = "index.js"
+}
