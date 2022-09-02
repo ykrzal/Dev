@@ -28,16 +28,41 @@
 #   }
 # }
 
-resource "aws_synthetics_canary" "some" {
-  name                 = "some-canary"
-  artifact_s3_location = "s3://${aws_s3_bucket.canary_script.id}/"
+resource "aws_synthetics_canary" "main" {
+  name                 = "canary"
+  artifact_s3_location = "s3://${local.canary_bucket}/canary/${local.canary_name}"
   execution_role_arn   = aws_iam_role.test.arn
-  handler              = "index.handler"
-  #zip_file             = "index.js.zip"
-  runtime_version      = "syn-nodejs-puppeteer-3.6"
+  handler              = "apiCanaryBlueprint.handler"
+  start_canary         = true
+  zip_file             = "/tmp/canary_zip_inline.zip"
+  runtime_version      = "syn-nodejs-puppeteer-3.5"
+  
+  # VPC Config
+  # vpc_config {
+  #   subnet_ids         = 
+  #   security_group_ids = 
+  # }
+
+    run_config {
+    active_tracing = true
+    timeout_in_seconds = 60
+  }
 
   schedule {
-    expression = "rate(1 minute)"
+    expression = "rate(5 minutes)"
+  }
+
+}
+
+data "archive_file" "canary_zip_inline" {
+  type        = "zip"
+  output_path = "/tmp/canary_zip_inline.zip"
+  
+  source {
+    content  = templatefile("${path.module}/templates/Development/canary_node.tmpl", {
+      endpoint = "techmagic.co"
+    })
+    filename = "nodejs/node_modules/apiCanaryBlueprint.js"
   }
 }
 
