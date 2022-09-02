@@ -18,7 +18,7 @@ resource "aws_synthetics_canary" "healthchecks" {
   runtime_version           = "syn-nodejs-puppeteer-3.3"
 
   schedule {
-    expression = "rate(1 min)"
+    expression = "rate(5 minutes)"
   }
 
   run_config {
