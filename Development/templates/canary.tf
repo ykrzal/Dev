@@ -12,7 +12,7 @@ resource "aws_synthetics_canary" "healthchecks" {
   start_canary              = true
   s3_bucket                 = aws_s3_bucket_object.canary_script.bucket
   s3_key                    = aws_s3_bucket_object.canary_script.key
-  artifact_s3_location      = "s3://${aws_s3_bucket.canary_bucket.id}/"
+  artifact_s3_location      = "s3://${aws_s3_bucket.canary_script.id}/"
   execution_role_arn        = aws_iam_role.test.arn
   handler                   = "apiCanaryBlueprint.handler"
   runtime_version           = "syn-nodejs-puppeteer-3.3"
