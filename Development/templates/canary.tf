@@ -1,30 +1,43 @@
-locals {
-  canary_name                   = "test"
-  canary_timeout_in_seconds     = 30
-  canary_memory_limit_in_mb     = 960
-  canary_active_tracing_enabled = false
-  canary_environment_variables  = { ENV: "DEV" }
-  set_canary_run_config_command = "aws synthetics update-canary --name ${local.canary_name} --run-config '${jsonencode({TimeoutInSeconds: local.canary_timeout_in_seconds, MemoryInMB: local.canary_memory_limit_in_mb, ActiveTracing: local.canary_active_tracing_enabled, EnvironmentVariables: local.canary_environment_variables })}'"
-}
+# locals {
+#   canary_name                   = "test"
+#   canary_timeout_in_seconds     = 30
+#   canary_memory_limit_in_mb     = 960
+#   canary_active_tracing_enabled = false
+#   canary_environment_variables  = { ENV: "DEV" }
+#   set_canary_run_config_command = "aws synthetics update-canary --name ${local.canary_name} --run-config '${jsonencode({TimeoutInSeconds: local.canary_timeout_in_seconds, MemoryInMB: local.canary_memory_limit_in_mb, ActiveTracing: local.canary_active_tracing_enabled, EnvironmentVariables: local.canary_environment_variables })}'"
+# }
 
-resource "aws_synthetics_canary" "healthchecks" {
-  name                      = local.canary_name
-  start_canary              = true
-  s3_bucket                 = aws_s3_bucket_object.canary_script.bucket
-  s3_key                    = aws_s3_bucket_object.canary_script.key
-  artifact_s3_location      = "s3://${aws_s3_bucket.canary_script.id}/"
-  execution_role_arn        = aws_iam_role.test.arn
-  handler                   = "apiCanaryBlueprint.handler"
-  runtime_version           = "syn-nodejs-puppeteer-3.3"
+# resource "aws_synthetics_canary" "healthchecks" {
+#   name                      = local.canary_name
+#   start_canary              = true
+#   s3_bucket                 = aws_s3_bucket_object.canary_script.bucket
+#   s3_key                    = aws_s3_bucket_object.canary_script.key
+#   artifact_s3_location      = "s3://${aws_s3_bucket.canary_script.id}/"
+#   execution_role_arn        = aws_iam_role.test.arn
+#   handler                   = "apiCanaryBlueprint.handler"
+#   runtime_version           = "syn-nodejs-puppeteer-3.3"
+
+#   schedule {
+#     expression = "rate(5 minutes)"
+#   }
+
+#   run_config {
+#     active_tracing      = local.canary_active_tracing_enabled
+#     memory_in_mb        = local.canary_memory_limit_in_mb
+#     timeout_in_seconds  = local.canary_timeout_in_seconds
+#   }
+# }
+
+resource "aws_synthetics_canary" "some" {
+  name                 = "some-canary"
+  artifact_s3_location = "s3://${aws_s3_bucket.canary_script.id}/"
+  execution_role_arn   = aws_iam_role.test.arn
+  handler              = "index.handler"
+  zip_file             = "index.js.zip"
+  runtime_version      = "syn-nodejs-puppeteer-3.6"
 
   schedule {
-    expression = "rate(5 minutes)"
-  }
-
-  run_config {
-    active_tracing      = local.canary_active_tracing_enabled
-    memory_in_mb        = local.canary_memory_limit_in_mb
-    timeout_in_seconds  = local.canary_timeout_in_seconds
+    expression = "rate(1 minute)"
   }
 }
 
