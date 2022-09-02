@@ -28,19 +28,19 @@ resource "aws_synthetics_canary" "healthchecks" {
   }
 }
 
-resource "null_resource" "add_environment_variables_to_canary" {
-  # Run this command again whenever any of the run-config parameters change
-  triggers = {
-    canary_active_tracing_enabled = local.canary_active_tracing_enabled
-    canary_memory_limit_in_mb     = local.canary_memory_limit_in_mb
-    canary_timeout_in_seconds     = local.canary_timeout_in_seconds
-    # Trigger values must be strings (or implicitly coerced into strings, like bools), so turn env vars into a string like FOO=bar,FIZZ=buzz
-    canary_environment_variables  = join(",", [ for key, value in local.canary_environment_variables: "${key}=${value}" ])
-  }
-  provisioner "local-exec" {
-    command = local.set_canary_run_config_command
-  }
-}
+# resource "null_resource" "add_environment_variables_to_canary" {
+#   # Run this command again whenever any of the run-config parameters change
+#   triggers = {
+#     canary_active_tracing_enabled = local.canary_active_tracing_enabled
+#     canary_memory_limit_in_mb     = local.canary_memory_limit_in_mb
+#     canary_timeout_in_seconds     = local.canary_timeout_in_seconds
+#     # Trigger values must be strings (or implicitly coerced into strings, like bools), so turn env vars into a string like FOO=bar,FIZZ=buzz
+#     canary_environment_variables  = join(",", [ for key, value in local.canary_environment_variables: "${key}=${value}" ])
+#   }
+#   provisioner "local-exec" {
+#     command = local.set_canary_run_config_command
+#   }
+# }
 
 
 resource "aws_iam_role" "test" {
