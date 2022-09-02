@@ -11,7 +11,7 @@ resource "aws_synthetics_canary" "some" {
   }
 }
 
-resource "aws_synthetics_canary" "some" {
+resource "aws_synthetics_canary" "some1" {
   name                 = "canary1"
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
