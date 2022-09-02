@@ -4,7 +4,7 @@ resource "aws_synthetics_canary" "some" {
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "exports.handler"
   zip_file             = "index.js.zip"
-  runtime_version      = "syn-1.0"
+  runtime_version      = "syn-nodejs-puppeteer-3.6"
 
   schedule {
     expression = "rate(0 minute)"
