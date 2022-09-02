@@ -44,7 +44,7 @@ resource "null_resource" "add_environment_variables_to_canary" {
 
 
 resource "aws_iam_role" "test" {
-  name = "test"
+  name = "test1"
 
   assume_role_policy = <<EOF
 {
@@ -84,13 +84,13 @@ EOF
 }
 
 resource "aws_s3_bucket" "canary_script" {
-    bucket                    = "${var.environment}-${local.account_id}-canary_script"
+    bucket                    = "${var.environment}${local.account_id}canaryscript"
     #force_destroy            = false
     force_destroy             = true
 }
 
 resource "aws_s3_bucket_object" "canary_script" {
-  key        = "canary_script"
+  key        = "canaryscript"
   bucket     = aws_s3_bucket.canary_script.id
   source     = "index.js"
 }
