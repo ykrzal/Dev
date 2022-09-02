@@ -30,7 +30,7 @@
 
 resource "aws_synthetics_canary" "main" {
   name                 = "canary"
-  artifact_s3_location = "s3://${local.canary_bucket}/canary/${local.canary_name}"
+  artifact_s3_location = "s3://${aws_s3_bucket_object.canary_script.bucket}/canary}"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "apiCanaryBlueprint.handler"
   start_canary         = true
@@ -59,7 +59,7 @@ data "archive_file" "canary_zip_inline" {
   output_path = "/tmp/canary_zip_inline.zip"
   
   source {
-    content  = templatefile("${path.module}/templates/Development/canary_node.tmpl", {
+    content  = templatefile("/Development/templates/canary_node.tmpl", {
       endpoint = "techmagic.co"
     })
     filename = "nodejs/node_modules/apiCanaryBlueprint.js"
