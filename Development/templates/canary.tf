@@ -27,7 +27,7 @@ resource "aws_synthetics_canary" "some1" {
 
 resource "aws_synthetics_canary" "some_canary_test" {
   name                 = "some_canary_test"
-  artifact_s3_location = aws_s3_bucket.canary_script.id
+  artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "pageLoadBlueprint.handler"
 
