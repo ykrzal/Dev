@@ -11,6 +11,19 @@ resource "aws_synthetics_canary" "some2" {
   }
 }
 
+resource "aws_synthetics_canary" "some3" {
+  name                 = "canary3"
+  artifact_s3_location = "s3://dev198448550418canaryscript/"
+  execution_role_arn   = aws_iam_role.test.arn
+  handler              = "exports.handler"
+  zip_file             = "index.zip"
+  runtime_version      = "syn-nodejs-puppeteer-3.7"
+
+  schedule {
+    expression = "rate(1 hour)"
+  }
+}
+
 # resource "aws_synthetics_canary" "some_canary_test" {
 #   name                 = "some_canary_test"
 #   artifact_s3_location = "s3://dev198448550418canaryscript/"
