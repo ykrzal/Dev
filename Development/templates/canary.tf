@@ -2,9 +2,9 @@ resource "aws_synthetics_canary" "some2" {
   name                 = "canary2"
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
-  handler              = "exports.handler"
+  handler              = "export.handler"
   zip_file             = "export/index.zip"
-  runtime_version      = "syn-nodejs-puppeteer-3.6"
+  runtime_version      = "syn-nodejs-puppeteer-3.7"
 
   schedule {
     expression = "rate(1 hour)"
