@@ -1,44 +1,30 @@
-resource "aws_synthetics_canary" "some" {
-  name                 = "canary"
-  artifact_s3_location = "s3://dev198448550418canaryscript/"
-  execution_role_arn   = aws_iam_role.test.arn
-  handler              = "exports.handler"
-  zip_file             = "index.zip"
-  runtime_version      = "syn-nodejs-puppeteer-3.6"
-
-  schedule {
-    expression = "rate(1 hour)"
-  }
-}
-
-resource "aws_synthetics_canary" "some1" {
-  name                 = "canary1"
-  artifact_s3_location = "s3://dev198448550418canaryscript/"
-  execution_role_arn   = aws_iam_role.test.arn
-  handler              = "exports.handler"
-  zip_file             = "index.zip"
-  runtime_version      = "syn-nodejs-puppeteer-3.6"
-
-  schedule {
-    expression = "rate(1 hour)"
-  }
-}
-
-
-resource "aws_synthetics_canary" "some_canary_test" {
-  name                 = "some_canary_test"
+resource "aws_synthetics_canary" "some2" {
+  name                 = "canary2"
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "pageLoadBlueprint.handler"
-
   zip_file             = "index.zip"
-
-  runtime_version      = "syn-nodejs-puppeteer-3.5"
+  runtime_version      = "syn-nodejs-puppeteer-3.6"
 
   schedule {
     expression = "rate(1 hour)"
   }
 }
+
+# resource "aws_synthetics_canary" "some_canary_test" {
+#   name                 = "some_canary_test"
+#   artifact_s3_location = "s3://dev198448550418canaryscript/"
+#   execution_role_arn   = aws_iam_role.test.arn
+#   handler              = "pageLoadBlueprint.handler"
+
+#   zip_file             = "index.zip"
+
+#   runtime_version      = "syn-nodejs-puppeteer-3.5"
+
+#   schedule {
+#     expression = "rate(1 hour)"
+#   }
+# }
 
 
 resource "aws_iam_role" "test" {
