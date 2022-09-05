@@ -25,6 +25,22 @@ resource "aws_synthetics_canary" "some1" {
 }
 
 
+resource "aws_synthetics_canary" "some_canary_test" {
+  name                 = "some_canary_test"
+  artifact_s3_location = aws_s3_bucket.canary_script.id
+  execution_role_arn   = aws_iam_role.test.arn
+  handler              = "pageLoadBlueprint.handler"
+
+  zip_file             = "index.zip"
+
+  runtime_version      = "syn-nodejs-puppeteer-3.5"
+
+  schedule {
+    expression = "rate(1 hour)"
+  }
+}
+
+
 resource "aws_iam_role" "test" {
   name = "test1"
 
