@@ -3,7 +3,7 @@ resource "aws_synthetics_canary" "some2" {
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "exports.handler"
-  zip_file             = "index.zip"
+  zip_file             = "export/index.zip"
   runtime_version      = "syn-nodejs-puppeteer-3.6"
 
   schedule {
