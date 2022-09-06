@@ -37,7 +37,7 @@ data "archive_file" "cw_syn_function" {
 
   type        = "zip"
   source_dir  = "Development/canary/"
-  output_path = "Development/canary/index.zip"
+  output_path = "Development/index.zip"
 }
 
 resource "aws_synthetics_canary" "cw_syn_canary" {
