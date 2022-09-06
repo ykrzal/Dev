@@ -47,7 +47,8 @@ resource "aws_synthetics_canary" "cw_syn_canary" {
   execution_role_arn       = aws_iam_role.test.arn
   failure_retention_period = 31
   handler                  = "pageLoadBuilderBlueprint.handler"
-  zip_file                 = "data.archive_file.cw_syn_function.output_path"
+  #zip_file                 = "data.archive_file.cw_syn_function.output_path"
+  zip_file                 = "Development/canary/index.zip"
   name                     = "yura"
   runtime_version          = "syn-nodejs-puppeteer-3.6"
   success_retention_period = 31
