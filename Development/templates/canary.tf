@@ -28,7 +28,7 @@ resource "aws_synthetics_canary" "some3" {
 
 locals {
   cw_syn_target = {
-    "target_name" = "index.js"
+    "target_name" = "pageLoadBuilderBlueprint.js"
   }
 }
 
@@ -36,8 +36,8 @@ data "archive_file" "cw_syn_function" {
   for_each = local.cw_syn_target
 
   type        = "zip"
-  source_dir  = "Development/canary/index.js"
-  output_path = "Development/canary/index.zip"
+  source_dir  = "Development/canary/nodejs/node_modules/${each.key}"
+  output_path = "Development/canary/nodejs/node_modules/index.zip"
 }
 
 resource "aws_synthetics_canary" "cw_syn_canary" {
