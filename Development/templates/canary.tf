@@ -1,26 +1,46 @@
-resource "aws_synthetics_canary" "some2" {
-  name                 = "canary2"
+# resource "aws_synthetics_canary" "some2" {
+#   name                 = "canary2"
+#   artifact_s3_location = "s3://dev198448550418canaryscript/"
+#   execution_role_arn   = aws_iam_role.test.arn
+#   handler              = "pageLoadBlueprint.handler"
+#   zip_file             = "index.zip"
+#   runtime_version      = "syn-nodejs-puppeteer-3.7"
+
+#   schedule {
+#     expression = "rate(1 hour)"
+#   }
+# }
+
+# resource "aws_synthetics_canary" "some3" {
+#   name                 = "canary3"
+#   artifact_s3_location = "s3://dev198448550418canaryscript/"
+#   execution_role_arn   = aws_iam_role.test.arn
+#   handler              = "exports.handler"
+#   zip_file             = "index.zip"
+#   runtime_version      = "syn-nodejs-puppeteer-3.7"
+
+#   schedule {
+#     expression = "rate(1 hour)"
+#   }
+# }
+
+
+resource "aws_synthetics_canary" "sswebsite2" {
+  name                 = "sswebsite2"
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
-  handler              = "pageLoadBlueprint.handler"
-  zip_file             = "index.zip"
-  runtime_version      = "syn-nodejs-puppeteer-3.7"
+  handler              = "sswebsite2.handler"
+  zip_file             = "sswebsite2/sswebsite2v1.zip"
+  runtime_version      = "syn-nodejs-puppeteer-3.5"
+  start_canary = true
 
-  schedule {
-    expression = "rate(1 hour)"
+  run_config {
+    active_tracing = true
+    memory_in_mb = 960
+    timeout_in_seconds = 60
   }
-}
-
-resource "aws_synthetics_canary" "some3" {
-  name                 = "canary3"
-  artifact_s3_location = "s3://dev198448550418canaryscript/"
-  execution_role_arn   = aws_iam_role.test.arn
-  handler              = "exports.handler"
-  zip_file             = "index.zip"
-  runtime_version      = "syn-nodejs-puppeteer-3.7"
-
   schedule {
-    expression = "rate(1 hour)"
+    expression = "rate(1 minute)"
   }
 }
 
