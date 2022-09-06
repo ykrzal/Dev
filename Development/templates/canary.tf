@@ -37,18 +37,18 @@ data "archive_file" "cw_syn_function" {
 
   type        = "zip"
   source_dir  = "Development/canary"
-  output_path = "Development/canary/layer.zip"
+  output_path = "Development/canary/index.zip"
 }
 
 resource "aws_synthetics_canary" "cw_syn_canary" {
-  for_each = local.cw_syn_target
+  #for_each = local.cw_syn_target
 
-  artifact_s3_location     = "s3://dev198448550418canaryscript/canary/${each.key}"
+  artifact_s3_location     = "s3://dev198448550418canaryscript/canary/"
   execution_role_arn       = aws_iam_role.test.arn
   failure_retention_period = 31
   handler                  = "pageLoadBuilderBlueprint.handler"
-  zip_file                 = data.archive_file.cw_syn_function[each.key].output_path
-  name                     = each.key
+  zip_file                 = data.archive_file.cw_syn_function.output_path
+  name                     = yura
   runtime_version          = "syn-nodejs-puppeteer-3.6"
   success_retention_period = 31
   tags = {
