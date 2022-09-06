@@ -28,7 +28,7 @@ resource "aws_synthetics_canary" "some3" {
 
 locals {
   cw_syn_target = {
-    "target_name" = "index"
+    "target_name" = "index.js"
   }
 }
 
@@ -36,7 +36,7 @@ data "archive_file" "cw_syn_function" {
   for_each = local.cw_syn_target
 
   type        = "zip"
-  source_dir  = "Development/canary/${each.key}"
+  source_dir  = "Development/canary/index.js"
   output_path = "Development/canary/index.zip"
 }
 
