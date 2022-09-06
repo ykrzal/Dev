@@ -149,7 +149,7 @@ resource "aws_s3_bucket" "canary_script" {
 resource "aws_synthetics_canary" "saints-xctf-up" {
   name = "sxctf-up-dev"
   artifact_s3_location = "s3://dev198448550418canaryscript/"
-  execution_role_arn = "aws_iam_role.test.arn"
+  execution_role_arn = aws_iam_role.test.arn
   runtime_version = "syn-nodejs-puppeteer-3.5"
   handler = "up.handler"
   zip_file = "${path.module}/SaintsXCTFUp.zip"
