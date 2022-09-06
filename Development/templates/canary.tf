@@ -36,8 +36,8 @@ data "archive_file" "cw_syn_function" {
   for_each = local.cw_syn_target
 
   type        = "zip"
-  source_dir  = "Development/canary/${each.key}"
-  output_path = "Development/canary/${each.key}/layer.zip"
+  source_dir  = "Development/canary"
+  output_path = "Development/canary/layer.zip"
 }
 
 resource "aws_synthetics_canary" "cw_syn_canary" {
