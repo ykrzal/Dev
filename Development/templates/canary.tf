@@ -17,7 +17,7 @@ resource "aws_synthetics_canary" "sswebsite2" {
   }
 }
 
-
+##
 
 resource "aws_cloudwatch_metric_alarm" "synthetics_alarm_app1" {
   alarm_name          = "Synthetics-Alarm-App1"
