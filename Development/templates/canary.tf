@@ -1,30 +1,3 @@
-# resource "aws_synthetics_canary" "some2" {
-#   name                 = "canary2"
-#   artifact_s3_location = "s3://dev198448550418canaryscript/"
-#   execution_role_arn   = aws_iam_role.test.arn
-#   handler              = "pageLoadBlueprint.handler"
-#   zip_file             = "index.zip"
-#   runtime_version      = "syn-nodejs-puppeteer-3.7"
-
-#   schedule {
-#     expression = "rate(1 hour)"
-#   }
-# }
-
-# resource "aws_synthetics_canary" "some3" {
-#   name                 = "canary3"
-#   artifact_s3_location = "s3://dev198448550418canaryscript/"
-#   execution_role_arn   = aws_iam_role.test.arn
-#   handler              = "exports.handler"
-#   zip_file             = "index.zip"
-#   runtime_version      = "syn-nodejs-puppeteer-3.7"
-
-#   schedule {
-#     expression = "rate(1 hour)"
-#   }
-# }
-
-
 resource "aws_synthetics_canary" "sswebsite2" {
   name                 = "sswebsite2"
   artifact_s3_location = "s3://dev198448550418canaryscript/"
@@ -46,71 +19,53 @@ resource "aws_synthetics_canary" "sswebsite2" {
 
 
 
-locals {
-  cw_syn_target = {
-    "target_name" = "pageLoadBuilderBlueprint.js"
+resource "aws_cloudwatch_metric_alarm" "synthetics_alarm_app1" {
+  alarm_name          = "Synthetics-Alarm-App1"
+  comparison_operator = "LessThanThreshold"
+  datapoints_to_alarm = "1"
+  evaluation_periods  = "1"
+  metric_name         = "SuccessPercent"
+  namespace           = "CloudWatchSynthetics"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "90"  
+  treat_missing_data  = "breaching"
+  dimensions = {
+    CanaryName = aws_synthetics_canary.sswebsite2.id 
   }
-}
-
-data "archive_file" "cw_syn_function" {
-  for_each = local.cw_syn_target
-
-  type        = "zip"
-  source_dir  = "Development/canary/"
-  output_path = "Development/canary/index.zip"
-}
-
-resource "aws_synthetics_canary" "cw_syn_canary" {
-  #for_each = local.cw_syn_target
-
-  artifact_s3_location     = "s3://dev198448550418canaryscript/canary/"
-  execution_role_arn       = aws_iam_role.test.arn
-  #failure_retention_period = 31
-  handler                  = "pageLoadBuilderBlueprint.handler"
-  #zip_file                 = "data.archive_file.cw_syn_function.output_path"
-  zip_file                 = "Development/canary/index.zip"
-  name                     = "yura"
-  runtime_version          = "syn-nodejs-puppeteer-3.6"
-  #success_retention_period = 31
-  tags = {
-    "blueprint" = "pageload"
-  }
-  tags_all = {
-    "blueprint" = "pageload"
-  }
-
-  run_config {
-    active_tracing = false
-    environment_variables = {
-      URL = "https://google.com/"
-    }
-    #memory_in_mb      = 1000
-    timeout_in_seconds = 60
-  }
-
-  schedule {
-    duration_in_seconds = 0
-    expression          = "rate(1 minute)"
-  }
+  alarm_description = "Synthetics alarm metric: SuccessPercent  LessThanThreshold 90"
+  ok_actions          = [aws_sns_topic.alerts_ci_sns_topic.arn]  
+  alarm_actions     = [aws_sns_topic.alerts_ci_sns_topic.arn]
 }
 
 
 
+resource "aws_sns_topic" "alerts_ci_sns_topic" {
+  name = "alerts-ci-slack-notifications"
+}
 
-# resource "aws_synthetics_canary" "some_canary_test" {
-#   name                 = "some_canary_test"
-#   artifact_s3_location = "s3://dev198448550418canaryscript/"
-#   execution_role_arn   = aws_iam_role.test.arn
-#   handler              = "pageLoadBlueprint.handler"
+# resource "aws_sns_topic_policy" "alerts_ci_sns_topic_policy" {
+#   arn    = aws_sns_topic.alerts_ci_sns_topic.arn
+#   policy = data.aws_iam_policy_document.alerts_ci_sns_topic_access.json
+# }
 
-#   zip_file             = "index.zip"
+# data "aws_iam_policy_document" "alerts_ci_sns_topic_access" {
+#   statement {
+#     actions = ["sns:Publish"]
 
-#   runtime_version      = "syn-nodejs-puppeteer-3.5"
+#     principals {
+#       type = "Service"
+#       identifiers = [
+#         "codestar-notifications.amazonaws.com"
+#       ]
+#     }
 
-#   schedule {
-#     expression = "rate(1 hour)"
+#     resources = [aws_sns_topic.alerts_ci_sns_topic.arn]
 #   }
 # }
+
+
+
 
 
 resource "aws_iam_role" "test" {
@@ -158,40 +113,3 @@ resource "aws_s3_bucket" "canary_script" {
     #force_destroy            = false
     force_destroy             = true
 }
-
-# resource "aws_s3_bucket_object" "canary_script" {
-#   key        = "canaryscript"
-#   bucket     = aws_s3_bucket.canary_script.id
-#   #source     = "index.js"
-# }
-
-
-# resource "aws_synthetics_canary" "saints-xctf-up" {
-#   name = "sxctf-up-dev"
-#   artifact_s3_location = "s3://dev198448550418canaryscript/"
-#   execution_role_arn = aws_iam_role.test.arn
-#   runtime_version = "syn-nodejs-puppeteer-3.5"
-#   handler = "up.handler"
-#   zip_file = "${path.module}/SaintsXCTFUp.zip"
-#   start_canary = false
-
-#   success_retention_period = 2
-#   failure_retention_period = 14
-
-#   schedule {
-#     expression = "rate(1 hour)"
-#     duration_in_seconds = 300
-#   }
-
-#   run_config {
-#     timeout_in_seconds = 300
-#     memory_in_mb = 960
-#     active_tracing = false
-#   }
-
-#   tags = {
-#     Name = "sxctf-up-ded"
-#     Environment = "dev"
-#     Application = "saints-xctf"
-#   }
-# }
