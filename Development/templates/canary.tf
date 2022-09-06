@@ -24,6 +24,58 @@ resource "aws_synthetics_canary" "some3" {
   }
 }
 
+
+
+locals {
+  cw_syn_target = {
+    "target_name" = "index"
+  }
+}
+
+data "archive_file" "cw_syn_function" {
+  for_each = local.cw_syn_target
+
+  type        = "zip"
+  source_dir  = "Development/canary/${each.key}"
+  output_path = "Development/canary/index.zip"
+}
+
+resource "aws_synthetics_canary" "cw_syn_canary" {
+  for_each = local.cw_syn_target
+
+  artifact_s3_location     = "s3://dev198448550418canaryscript/canary/${each.key}"
+  execution_role_arn       = aws_iam_role.test.arn
+  failure_retention_period = 31
+  handler                  = "pageLoadBuilderBlueprint.handler"
+  zip_file                 = data.archive_file.cw_syn_function[each.key].output_path
+  name                     = each.key
+  runtime_version          = "syn-nodejs-puppeteer-3.6"
+  success_retention_period = 31
+  tags = {
+    "blueprint" = "pageload"
+  }
+  tags_all = {
+    "blueprint" = "pageload"
+  }
+
+  run_config {
+    active_tracing = false
+    environment_variables = {
+      URL = "https://google.com/"
+    }
+    #memory_in_mb      = 1000
+    timeout_in_seconds = 60
+  }
+
+  schedule {
+    duration_in_seconds = 0
+    expression          = "rate(1 minute)"
+  }
+}
+
+
+
+
 # resource "aws_synthetics_canary" "some_canary_test" {
 #   name                 = "some_canary_test"
 #   artifact_s3_location = "s3://dev198448550418canaryscript/"
