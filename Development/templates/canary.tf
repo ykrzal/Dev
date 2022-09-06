@@ -45,13 +45,13 @@ resource "aws_synthetics_canary" "cw_syn_canary" {
 
   artifact_s3_location     = "s3://dev198448550418canaryscript/canary/"
   execution_role_arn       = aws_iam_role.test.arn
-  failure_retention_period = 31
+  #failure_retention_period = 31
   handler                  = "pageLoadBuilderBlueprint.handler"
   #zip_file                 = "data.archive_file.cw_syn_function.output_path"
   zip_file                 = "Development/canary/index.zip"
   name                     = "yura"
   runtime_version          = "syn-nodejs-puppeteer-3.6"
-  success_retention_period = 31
+  #success_retention_period = 31
   tags = {
     "blueprint" = "pageload"
   }
