@@ -30,7 +30,7 @@ resource "aws_synthetics_canary" "sswebsite2" {
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "sswebsite2.handler"
-  zip_file             = "sswebsite2/sswebsite2v1.zip"
+  zip_file             = "Development/templates/sswebsite2/sswebsite2v1.zip"
   runtime_version      = "syn-nodejs-puppeteer-3.5"
   start_canary = true
 
@@ -166,32 +166,32 @@ resource "aws_s3_bucket" "canary_script" {
 # }
 
 
-resource "aws_synthetics_canary" "saints-xctf-up" {
-  name = "sxctf-up-dev"
-  artifact_s3_location = "s3://dev198448550418canaryscript/"
-  execution_role_arn = aws_iam_role.test.arn
-  runtime_version = "syn-nodejs-puppeteer-3.5"
-  handler = "up.handler"
-  zip_file = "${path.module}/SaintsXCTFUp.zip"
-  start_canary = false
+# resource "aws_synthetics_canary" "saints-xctf-up" {
+#   name = "sxctf-up-dev"
+#   artifact_s3_location = "s3://dev198448550418canaryscript/"
+#   execution_role_arn = aws_iam_role.test.arn
+#   runtime_version = "syn-nodejs-puppeteer-3.5"
+#   handler = "up.handler"
+#   zip_file = "${path.module}/SaintsXCTFUp.zip"
+#   start_canary = false
 
-  success_retention_period = 2
-  failure_retention_period = 14
+#   success_retention_period = 2
+#   failure_retention_period = 14
 
-  schedule {
-    expression = "rate(1 hour)"
-    duration_in_seconds = 300
-  }
+#   schedule {
+#     expression = "rate(1 hour)"
+#     duration_in_seconds = 300
+#   }
 
-  run_config {
-    timeout_in_seconds = 300
-    memory_in_mb = 960
-    active_tracing = false
-  }
+#   run_config {
+#     timeout_in_seconds = 300
+#     memory_in_mb = 960
+#     active_tracing = false
+#   }
 
-  tags = {
-    Name = "sxctf-up-ded"
-    Environment = "dev"
-    Application = "saints-xctf"
-  }
-}
+#   tags = {
+#     Name = "sxctf-up-ded"
+#     Environment = "dev"
+#     Application = "saints-xctf"
+#   }
+# }
