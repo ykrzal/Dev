@@ -30,7 +30,7 @@ resource "aws_synthetics_canary" "sswebsite2" {
   artifact_s3_location = "s3://dev198448550418canaryscript/"
   execution_role_arn   = aws_iam_role.test.arn
   handler              = "sswebsite2.handler"
-  zip_file             = "${path.module}//sswebsite2/sswebsite2v1.zip"
+  zip_file             = "${path.module}/sswebsite2/sswebsite2v1.zip"
   runtime_version      = "syn-nodejs-puppeteer-3.5"
   start_canary = true
 
