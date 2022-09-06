@@ -36,7 +36,7 @@ data "archive_file" "cw_syn_function" {
   for_each = local.cw_syn_target
 
   type        = "zip"
-  source_dir  = "Development/canary"
+  source_dir  = "Development/canary/"
   output_path = "Development/canary/index.zip"
 }
 
