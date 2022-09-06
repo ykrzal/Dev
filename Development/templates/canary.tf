@@ -26,53 +26,53 @@ resource "aws_synthetics_canary" "some3" {
 
 
 
-# locals {
-#   cw_syn_target = {
-#     "target_name" = "pageLoadBuilderBlueprint.js"
-#   }
-# }
+locals {
+  cw_syn_target = {
+    "target_name" = "pageLoadBuilderBlueprint.js"
+  }
+}
 
-# data "archive_file" "cw_syn_function" {
-#   for_each = local.cw_syn_target
+data "archive_file" "cw_syn_function" {
+  for_each = local.cw_syn_target
 
-#   type        = "zip"
-#   source_dir  = "Development/canary/"
-#   output_path = "Development/canary/index.zip"
-# }
+  type        = "zip"
+  source_dir  = "Development/canary/"
+  output_path = "Development/canary/index.zip"
+}
 
-# resource "aws_synthetics_canary" "cw_syn_canary" {
-#   #for_each = local.cw_syn_target
+resource "aws_synthetics_canary" "cw_syn_canary" {
+  #for_each = local.cw_syn_target
 
-#   artifact_s3_location     = "s3://dev198448550418canaryscript/canary/"
-#   execution_role_arn       = aws_iam_role.test.arn
-#   #failure_retention_period = 31
-#   handler                  = "pageLoadBuilderBlueprint.handler"
-#   #zip_file                 = "data.archive_file.cw_syn_function.output_path"
-#   zip_file                 = "Development/canary/index.zip"
-#   name                     = "yura"
-#   runtime_version          = "syn-nodejs-puppeteer-3.6"
-#   #success_retention_period = 31
-#   tags = {
-#     "blueprint" = "pageload"
-#   }
-#   tags_all = {
-#     "blueprint" = "pageload"
-#   }
+  artifact_s3_location     = "s3://dev198448550418canaryscript/canary/"
+  execution_role_arn       = aws_iam_role.test.arn
+  #failure_retention_period = 31
+  handler                  = "pageLoadBuilderBlueprint.handler"
+  #zip_file                 = "data.archive_file.cw_syn_function.output_path"
+  zip_file                 = "Development/canary/index.zip"
+  name                     = "yura"
+  runtime_version          = "syn-nodejs-puppeteer-3.6"
+  #success_retention_period = 31
+  tags = {
+    "blueprint" = "pageload"
+  }
+  tags_all = {
+    "blueprint" = "pageload"
+  }
 
-#   run_config {
-#     active_tracing = false
-#     environment_variables = {
-#       URL = "https://google.com/"
-#     }
-#     #memory_in_mb      = 1000
-#     timeout_in_seconds = 60
-#   }
+  run_config {
+    active_tracing = false
+    environment_variables = {
+      URL = "https://google.com/"
+    }
+    #memory_in_mb      = 1000
+    timeout_in_seconds = 60
+  }
 
-#   schedule {
-#     duration_in_seconds = 0
-#     expression          = "rate(1 minute)"
-#   }
-# }
+  schedule {
+    duration_in_seconds = 0
+    expression          = "rate(1 minute)"
+  }
+}
 
 
 
