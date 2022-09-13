@@ -44,7 +44,6 @@ resource "aws_appautoscaling_policy" "ecs_admin_green_cpu" {
     }
     target_value = 80
   }
-  depends_on = [aws_appautoscaling_target.ecs_target]
 }
 resource "aws_appautoscaling_policy" "ecs_admin_green_memory" {
   name               = "admin-green-scaling-policy-memory"
@@ -59,7 +58,6 @@ resource "aws_appautoscaling_policy" "ecs_admin_green_memory" {
     }
     target_value = 80
   }
-  depends_on = [aws_appautoscaling_target.ecs_target]
 }
 
 resource "aws_ecs_task_definition" "admin" {
