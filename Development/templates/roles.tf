@@ -230,3 +230,52 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 }
 EOF
 }
+
+#####################################################
+##############   CW Canary Role   ###################
+#####################################################
+
+resource "aws_iam_role" "cw_canary_role" {
+  name                = "cw-canary-role"
+  description = "CloudWatch Synthetics lambda execution role for running canaries"
+  path = "/service-role/"
+  assume_role_policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}" 
+  managed_policy_arns = [aws_iam_policy.cw_canary_policy.arn]
+}
+
+resource "aws_iam_policy" "cw_canary_policy" {
+  name        = "cw-canary-iam-policy"
+  path        = "/"
+  description = "CloudWatch Canary Synthetic IAM Policy"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "cloudwatch:PutMetricData",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "cloudwatch:namespace": "CloudWatchSynthetics"
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "logs:CreateLogStream",
+                "s3:ListAllMyBuckets",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents",
+                "s3:GetBucketLocation",
+                "xray:PutTraceSegments"
+            ],
+            "Resource": "*"
+        }
+    ]
+})
+}

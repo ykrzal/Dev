@@ -31,6 +31,37 @@ resource "aws_appautoscaling_target" "admin_scale_target" {
   min_capacity       = "1"
 }
 
+resource "aws_appautoscaling_policy" "ecs_admin_green_cpu" {
+  name               = "admin-green-scaling-policy-cpu"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.admin_scale_target.resource_id
+  scalable_dimension = aws_appautoscaling_target.admin_scale_target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.admin_scale_target.service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+    target_value = 80
+  }
+  depends_on = [aws_appautoscaling_target.ecs_target]
+}
+resource "aws_appautoscaling_policy" "ecs_admin_green_memory" {
+  name               = "admin-green-scaling-policy-memory"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.admin_scale_target.resource_id
+  scalable_dimension = aws_appautoscaling_target.admin_scale_target.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.admin_scale_target.service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+    }
+    target_value = 80
+  }
+  depends_on = [aws_appautoscaling_target.ecs_target]
+}
+
 resource "aws_ecs_task_definition" "admin" {
   family                   = "${var.environment}-boopos-admin"
   requires_compatibilities = ["FARGATE"]
