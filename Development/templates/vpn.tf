@@ -1,10 +1,5 @@
 resource "aws_vpn_gateway" "vpn_gw" {
     vpc_id = "${aws_vpc.main_vpc.id}"
-
-    tags {
-        Name = "default"
-        Terraform = true
-    }
 }
 
 resource "aws_customer_gateway" "customer_gw" {
